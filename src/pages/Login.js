@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
+import NavBar from '../components/NavBar'
 import { LoginContext } from '../helper/Context'
 import StaffHomepage from './Staff/StaffHomepage'
 import StudentHomepage from './Student/StudentHomepage'
+import LoginSideBar from '../components/LoginSideBar'
 
 export default function Login() {
 
@@ -11,7 +13,7 @@ export default function Login() {
     const [password,setPassword] = useState('')
     const [category,setCategory] = useState('student')
 
-console.log(loginDetails)
+    console.log(loginDetails)
 
     function login(){
         fetch('http://localhost:8080/api/v1/student')
@@ -54,6 +56,7 @@ console.log(loginDetails)
       {loginDetails.userCategory==='staff' && (
           <Navigate to="/StaffHomepage"/>
       )}
+      <LoginSideBar/>
       <h1>Login</h1>
       <p>student id: </p><input value={studentId} onChange={e => setStudentId(e.target.value)}/><br/>
       <p>password: </p><input value={password} onChange={e => setPassword(e.target.value)}/><br/><br/>
