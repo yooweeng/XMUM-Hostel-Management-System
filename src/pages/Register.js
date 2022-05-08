@@ -26,7 +26,10 @@ export default function Register() {
                 }
             )
         })
-            .then(res => res.json())
+            .then(res => {
+                console.log('successful')
+                return res.json()
+            })
             .then(data => console.log(data))
     }
 
