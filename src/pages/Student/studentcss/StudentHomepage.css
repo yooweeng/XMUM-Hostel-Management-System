@@ -1,0 +1,54 @@
+.logo-xmum{
+    height: 5em;
+    width: auto;
+}
+
+.logo-hms{
+    height: 5em;
+    width: auto;
+}
+
+.logo-background{
+    background: #d8e4bc;
+}
+
+.navbar{
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: #8f9779;
+    transition: 0.4s;
+}
+
+.nav-link{
+    font-size: 1.25em;
+}
+
+.nav-link:active,
+.nav-link:focus,
+.nav-link:hover{
+    background-color: #ffffff26;
+}
+
+.svg-content { 
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.my-container{
+    transition: 0.4s;
+}
+
+.active-nav{
+    margin-left: 0;
+}
+
+.active-cont{
+    margin-left: 250px;
+}
+
+.navigation-item{
+    height: 5em;
+}
