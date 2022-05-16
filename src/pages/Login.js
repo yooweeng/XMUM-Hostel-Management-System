@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import NavBar from '../components/NavBar'
 import { LoginContext } from '../helper/Context'
-import StaffHomepage from './Staff/StaffHomepage'
-import StudentHomepage from './Student/StudentHomepage'
 import LoginSideBar from '../components/LoginSideBar'
+import LoginHeaderBar from '../components/LoginHeaderBar'
+import './css/Login.css'
 
 export default function Login() {
 
@@ -50,24 +49,30 @@ export default function Login() {
 
     return (
     <>
-      {loginDetails.userCategory==='student' && (
-          <Navigate to="/StudentHomepage"/>
+      {loginDetails.isLoggedIn===true && (
+          <Navigate to="/home"/>
       )}
-      {loginDetails.userCategory==='staff' && (
-          <Navigate to="/StaffHomepage"/>
-      )}
-      <LoginSideBar/>
-      <h1>Login</h1>
-      <p>student id: </p><input value={studentId} onChange={e => setStudentId(e.target.value)}/><br/>
-      <p>password: </p><input value={password} onChange={e => setPassword(e.target.value)}/><br/><br/>
-      Category: <select value={category} onChange={e => setCategory(e.target.value)}>
-          <option value="student">Student</option>
-          <option value="staff">Staff</option>
-      </select><br/><br/>
-      <button onClick={login}>Login</button>
-      <Link to='/register'><button>Register instead</button></Link>
-
-      <p id="output"></p>
+      <LoginHeaderBar/>
+      <div className='container-fluid px-0'>
+          <div className='row'>
+              <div className='col-6 ps-5 py-5'>
+                  <h1>Login</h1>
+                  <p>student id: </p><input value={studentId} onChange={e => setStudentId(e.target.value)}/><br/>
+                  <p>password: </p><input value={password} onChange={e => setPassword(e.target.value)}/><br/><br/>
+                  Category: <select value={category} onChange={e => setCategory(e.target.value)}>
+                    <option value="student">Student</option>
+                    <option value="staff">Staff</option>
+                  </select><br/><br/>
+                  <button onClick={login}>Login</button>
+                  <Link to='/register'><button>Register instead</button></Link>
+                  
+                  <p id="output"></p>
+              </div>
+              <div className='col-6 pe-0 mt-3 mb-5 sidebar-background'>
+                <LoginSideBar/>
+              </div>
+          </div>
+      </div>
     </>
     )
 }
