@@ -23,6 +23,9 @@ function Footer() {
                         </p>
                     </div>
                 </div>
+                <div className='row text-center'>
+                    <p>&#169; swe1904867</p>
+                </div>
             </div>
         </footer>
     </>

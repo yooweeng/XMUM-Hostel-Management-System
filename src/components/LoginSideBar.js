@@ -14,8 +14,8 @@ function LoginSideBar() {
       <p className='text-light py-4 px-4'>
         This system is limited for students and staffs of the campus only. 
         It requires Campus ID and password in order to authenticate the 
-        user before accessing the system. You can now use the Hostel Management
-        System to manage your hostel related activities more easily.
+        user before accessing the system. The Hostel Management
+        System helps to manage hostel related activities more easily.
       </p>
     </div>
     </>

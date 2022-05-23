@@ -9,10 +9,16 @@ function HostelFunctions() {
       <div className='d-flex'>
         <SideBar/>
         <section className='p-5 my-container col-10'>
+          <nav>
+            <ol class="breadcrumb font-breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active">Hostel Functions</li>
+            </ol>
+          </nav>
           <h1>Hostel Functions</h1>
           <div class="row mt-5">
             <div class="col-sm-6">
-              <div class="card">
+              <div class="card shadow">
                 <div class="card-body">
                   <h5 class="card-title">Register / apply for hostel</h5>
                   <p class="card-text mt-4">
@@ -26,7 +32,7 @@ function HostelFunctions() {
               </div>
             </div>
             <div class="col-sm-6">
-              <div class="card">
+              <div class="card shadow">
                 <div class="card-body">
                   <h5 class="card-title">Change hostel period and duration</h5>
                   <p class="card-text mt-4">
@@ -40,7 +46,7 @@ function HostelFunctions() {
           </div>
           <div class="row mt-5">
             <div class="col-sm-6">
-              <div class="card">
+              <div class="card shadow">
                 <div class="card-body">
                   <h5 class="card-title">Request for room checkout</h5>
                   <p class="card-text mt-4">
@@ -52,7 +58,7 @@ function HostelFunctions() {
               </div>
             </div>
             <div class="col-sm-6">
-              <div class="card">
+              <div class="card shadow">
                 <div class="card-body">
                   <h5 class="card-title">Request for change room</h5>
                   <p class="card-text mt-4">

@@ -10,10 +10,16 @@ function Dashboard() {
       <div className='d-flex'>
         <SideBar/>
         <section className='p-5 my-container col-10'>
+          <nav>
+            <ol class="breadcrumb font-breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </nav>
           <h1>Dashboard</h1>
-          <div class="card mt-5">
-            <h5 class="card-header">Profile</h5>
-            <table class="table">
+          <div className="card mt-5">
+            <h5 className="card-header">Profile</h5>
+            <table className="table">
               <tbody>
                 <tr className='table-primary'>
                     <td>Status: </td>
@@ -42,9 +48,9 @@ function Dashboard() {
               </tbody>
             </table>
           </div>
-          <div class="card mt-4">
-            <h5 class="card-header">Room</h5>
-            <table class="table">
+          <div className="card mt-4">
+            <h5 className="card-header">Room</h5>
+            <table className="table">
               <tbody>
                 <tr className='table-primary'>
                   <td>Room Status: </td>

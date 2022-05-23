@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
-import Footer from '../components/Footer'
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar'
 import { LoginContext } from '../helper/Context'
 import './css/Home.css'
 
-export default function StudentHomepage() {
+export default function Home() {
 
   const {loginDetails, setLoginDetails} = useContext(LoginContext)
   console.log(loginDetails)
