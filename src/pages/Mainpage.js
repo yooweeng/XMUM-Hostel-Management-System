@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar'
 import { LoginContext } from '../helper/Context'
