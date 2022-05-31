@@ -1,23 +1,17 @@
 import React from 'react'
-import NavBar from '../../components/NavBar'
-import SideBar from '../../components/SideBar'
+import { Link } from 'react-router-dom'
 
 function HostelApplication() {
   return (
     <>
-      <NavBar/>
-      <div className='d-flex'>
-        <SideBar/>
-        <section className='p-4 my-container col-10'>
-          <h1>Provide feedbacks</h1>
-
-        {/* TO-DO-Breadcrumbs */}
-        {/* TO-DO-Breadcrumbs */}
-        {/* TO-DO-Breadcrumbs */}
-        {/* TO-DO-Breadcrumbs */}
-
-          </section>
-      </div>
+      <nav>
+        <ol class="breadcrumb font-breadcrumb">
+          <li class="breadcrumb-item"><Link to="/home">Home</Link></li>
+          <li class="breadcrumb-item"><Link to="/hostelfunction">Hostel Functions</Link></li>
+          <li class="breadcrumb-item active">Hostel Application</li>
+        </ol>
+      </nav>
+      <h1>hostelapplication</h1>
     </>
   )
 }

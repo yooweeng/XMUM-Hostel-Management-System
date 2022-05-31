@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import xmumLogo from '../images/xmumLogo.png'
 import './css/NavBar.css'
 
@@ -8,7 +9,9 @@ function NavBar() {
       <div className='container-fluid text-center py-1 logo-background'>
         <div className='row'>
           <div className='col-8'>
-            <img src={xmumLogo} className='logo-xmum' alt='Logo of XMUM'/>
+            <Link to='/home'>
+              <img src={xmumLogo} className='logo-xmum' alt='Logo of XMUM'/>
+            </Link>
           </div>
           <div className='col-2'>
             <a href='#' className='nav-link text-dark text-break' data-bs-toggle="modal" data-bs-target="#announcementModal">

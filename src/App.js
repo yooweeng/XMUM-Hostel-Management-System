@@ -1,9 +1,9 @@
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import {Route, Routes} from "react-router-dom"
+import {BrowserRouter, Route, Routes} from "react-router-dom"
 import { LoginContext } from "./helper/Context";
 import { useState } from "react";
-import Home from "./pages/Home";
+import Mainpage from "./pages/Mainpage";
 import HostelFunctions from "./pages/hostelfunctions/HostelFunctions";
 import Dashboard from "./pages/Dashboard";
 import RequestMaintainence from "./pages/RequestMaintainence";
@@ -25,8 +25,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
-          <Route path="/home" element={<Home/>}/>
-          <Route path="/hostelfunction" element={<HostelFunctions/>}/>
+          <Route path="/:item" element={<Mainpage/>}/>
+          <Route path="/:item/:subitem" element={<Mainpage/>}/>
+          {/* <Route path="/hostelfunction" element={<HostelFunctions/>}/>
           <Route path="/hostelfunction/changehostelperiod" element={<ChangeHostelPeriod/>}/>
           <Route path="/hostelfunction/hostelapplication" element={<HostelApplication/>}/>
           <Route path="/hostelfunction/requestchangeroom" element={<RequestChangeRoom/>}/>
@@ -35,7 +36,7 @@ function App() {
           <Route path="/maintainence" element={<RequestMaintainence/>}/>
           <Route path="/report" element={<ViewReport/>}/>
           <Route path="/feedback" element={<ProvideFeedback/>}/>
-          <Route path="/settings" element={<Settings/>}/>
+          <Route path="/settings" element={<Settings/>}/> */}
         </Routes>
       </LoginContext.Provider>
       <Footer/>
