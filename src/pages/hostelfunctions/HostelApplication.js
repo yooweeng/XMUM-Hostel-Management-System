@@ -295,10 +295,15 @@ function HostelApplication() {
               </label>
             </div>
           </div>
-          {isAgreeTnC &&
-            <div className="form-group row">
+          {isAgreeTnC 
+          ? <div className="form-group row">
               <div className="col-12 mt-4">
-                <button type="submit" className="btn btn-primary float-end">Submit</button>
+                <button type="submit" className="btn btn-primary float-end">Submit Form</button>
+              </div>
+            </div>
+          : <div className="row">
+              <div className="form-text mt-0 pt-0">
+                ** It is required to read and accept the terms and conditions before submitting the form.
               </div>
             </div>
           }
