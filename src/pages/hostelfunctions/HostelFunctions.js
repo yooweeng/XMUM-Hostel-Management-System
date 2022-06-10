@@ -55,7 +55,7 @@ function HostelFunctions() {
         <div class="col-sm-6">
           <div class="card shadow">
             <div class="card-body">
-              <h5 class="card-title">Request for change room</h5>
+              <h5 class="card-title">Request for room exchange</h5>
               <p class="card-text mt-4">
                 Student can request to change their room or hostel type (Block D/ Block LY) by filling the form with relevant information.
                 Student will need to provide certain proves for the validation checking from the department site before approval.

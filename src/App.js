@@ -1,19 +1,9 @@
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import {BrowserRouter, Route, Routes} from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import { LoginContext } from "./helper/Context";
 import { useState } from "react";
 import Mainpage from "./pages/Mainpage";
-import HostelFunctions from "./pages/hostelfunctions/HostelFunctions";
-import Dashboard from "./pages/Dashboard";
-import RequestMaintainence from "./pages/RequestMaintainence";
-import ViewReport from "./pages/ViewReport";
-import ProvideFeedback from "./pages/ProvideFeedback";
-import Settings from "./pages/Settings";
-import ChangeHostelPeriod from "./pages/hostelfunctions/ChangeHostelPeriod";
-import HostelApplication from "./pages/hostelfunctions/HostelApplication";
-import RequestChangeRoom from "./pages/hostelfunctions/RequestChangeRoom";
-import RequestRoomCheckout from "./pages/hostelfunctions/RequestRoomCheckout";
 import Footer from "./components/Footer";
 
 function App() {
@@ -27,16 +17,6 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/:item" element={<Mainpage/>}/>
           <Route path="/:item/:subitem" element={<Mainpage/>}/>
-          {/* <Route path="/hostelfunction" element={<HostelFunctions/>}/>
-          <Route path="/hostelfunction/changehostelperiod" element={<ChangeHostelPeriod/>}/>
-          <Route path="/hostelfunction/hostelapplication" element={<HostelApplication/>}/>
-          <Route path="/hostelfunction/requestchangeroom" element={<RequestChangeRoom/>}/>
-          <Route path="/hostelfunction/requestroomcheckout" element={<RequestRoomCheckout/>}/>
-          <Route path="/dashboard" element={<Dashboard/>}/>
-          <Route path="/maintainence" element={<RequestMaintainence/>}/>
-          <Route path="/report" element={<ViewReport/>}/>
-          <Route path="/feedback" element={<ProvideFeedback/>}/>
-          <Route path="/settings" element={<Settings/>}/> */}
         </Routes>
       </LoginContext.Provider>
       <Footer/>
