@@ -51,7 +51,7 @@ function NavBar() {
                 Profile
               </button>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item disabled" href="#">User, Ng Yoo Wee</a></li>
+                <li><a className="dropdown-item disabled" href="#">Welcome, Ng Yoo Wee</a></li>
                 <li><a className="dropdown-item" href="#">Account Details</a></li>
                 <li><hr className="dropdown-divider"/></li>
                 <li><a className="dropdown-item" href="/">Logout</a></li>

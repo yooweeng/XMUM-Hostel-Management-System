@@ -9,7 +9,7 @@ function LoginSideBar() {
   return (
     <>
     <div>
-      <h1 className='text-light center-text pt-4'>Welcome to XMUMHMS</h1>
+      <h1 className='text-light center-text pt-4'>XMUMHMS</h1>
       <center><img className='login-image center-text' src={welcome} alt='Welcome image of XMUM campus'/></center>
       <p className='text-light py-4 px-4'>
         This system is limited for students and staffs of the campus only. 

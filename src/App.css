@@ -1,3 +1,7 @@
 .center-text{
     text-align: center;
 }
+
+.center-justify{
+    justify-content: center;
+}

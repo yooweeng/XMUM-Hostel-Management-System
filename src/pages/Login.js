@@ -54,8 +54,8 @@ export default function Login() {
       )}
       <LoginHeaderBar/>
       <div className='container-fluid px-0'>
-          <div className='row'>
-              <div className='col-6 ps-5 py-5'>
+          <div className='row w-100'>
+              <div className='col-6 ps-5 py-5 pe-0'>
                   <h1>Login</h1>
                   <p>student id: </p><input value={studentId} onChange={e => setStudentId(e.target.value)}/><br/>
                   <p>password: </p><input value={password} onChange={e => setPassword(e.target.value)}/><br/><br/>
@@ -63,12 +63,12 @@ export default function Login() {
                     <option value="student">Student</option>
                     <option value="staff">Staff</option>
                   </select><br/><br/>
-                  <button onClick={login}>Login</button>
-                  <Link to='/register'><button>Register instead</button></Link>
-                  
-                  <p id="output"></p>
+                  <button className='btn btn-primary' onClick={login}>Login</button>
+                  <Link to='/register'>
+                    <button className='btn btn-primary'>Register</button>
+                  </Link>
               </div>
-              <div className='col-6 pe-0 mt-3 mb-5 sidebar-background'>
+              <div className='col-6 p-0 mt-3 mb-5 sidebar-background'>
                 <LoginSideBar/>
               </div>
           </div>
