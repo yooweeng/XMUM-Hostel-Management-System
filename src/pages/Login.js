@@ -8,7 +8,7 @@ import './css/Login.css'
 export default function Login() {
 
     const {loginDetails, setLoginDetails} = useContext(LoginContext)
-    const [studentId,setStudentId] = useState('')
+    const [userId,setUserId] = useState('')
     const [password,setPassword] = useState('')
     const [category,setCategory] = useState('student')
 
@@ -22,11 +22,11 @@ export default function Login() {
     
     function verifyLogin(data){
 
-        console.log(studentId,password,data)
+        console.log(userId,password,data)
 
         for(var i=0; i<data.length; i++){
             //if student id and password match for record in database
-            if(studentId === data[i].student_id && password === data[i].password){
+            if(userId === data[i].student_id && password === data[i].password){
                 if(category === 'student'){
                     setLoginDetails(prevDetails =>{
                         return {isLoggedIn: true, userCategory: 'student'}
@@ -61,21 +61,21 @@ export default function Login() {
                   <div className='row mt-4'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">User ID:</label>
                     <div className="col-4">
-                        <input type="text" className="form-control"/>
+                        <input type="text" className="form-control" value={userId} onChange={e => setUserId(e.target.value)}/>
                     </div>
                   </div>
                   <div className='row mt-3'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">Password:</label>
                     <div className="col-4">
-                        <input type="password" className="form-control"/>
+                        <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)}/>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <label className="col-2 col-form-label align-self-center ms-5 p-0">Category:</label>
                     <div className="col-4">
-                        <select className="form-select">
-                            <option value="1" selected>Student</option>
-                            <option value="2">Staff</option>
+                        <select className="form-select" value={category} onChange={e => setCategory(e.target.value)}>
+                            <option value="student" selected>Student</option>
+                            <option value="staff">Staff</option>
                         </select>
                     </div>
                   </div>

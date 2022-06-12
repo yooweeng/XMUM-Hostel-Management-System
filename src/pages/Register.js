@@ -4,11 +4,13 @@ import LoginHeaderBar from '../components/LoginHeaderBar'
 
 export default function Register() {
 
-    const [studentId,setStudentId] = useState('')
+    const [userId,setUserId] = useState('')
     const [fname,setFname] = useState('')
     const [lname,setLname] = useState('')
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
+    const [confirmPassword,setConfirmPassword] = useState('')
+    const [category,setCategory] = useState('student')
 
     function register(){
 
@@ -19,7 +21,7 @@ export default function Register() {
             },
             body: JSON.stringify(
                 {
-                    'student_id': studentId,
+                    'student_id': userId,
                     'email': email,
                     'password': password,
                     'fname': fname,
@@ -42,19 +44,19 @@ export default function Register() {
                 <div className='row mt-4'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">User ID:</label>
                     <div className="col-4">
-                        <input type="text" className="form-control"/>
+                        <input type="text" className="form-control" value={userId} onChange={e => setUserId(e.target.value)}/>
                     </div>
                 </div>
                 <div className='row mt-4'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">First Name:</label>
                     <div className="col-4">
-                        <input type="text" className="form-control"/>
+                        <input type="text" className="form-control" value={fname} onChange={e => setFname(e.target.value)}/>
                     </div>
                 </div>
                 <div className='row mt-4'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">Last Name:</label>
                     <div className="col-4">
-                        <input type="text" className="form-control"/>
+                        <input type="text" className="form-control" value={lname} onChange={e => setLname(e.target.value)}/>
                     </div>
                 </div>
                 <div className='row mt-4'>
@@ -76,19 +78,24 @@ export default function Register() {
                 <div className='row mt-3'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">Password:</label>
                     <div className="col-4">
-                        <input type="password" className="form-control"/>
+                        <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)}/>
                     </div>
                 </div>
                 <div className='row mt-3'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">Confirm Password:</label>
                     <div className="col-4">
-                        <input type="password" className="form-control"/>
+                        <input type="password" className="form-control" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
                     </div>
                 </div>
+                {(confirmPassword.length > 0) && (password !== confirmPassword) &&
+                 <div className="form-text text-danger offset-3">
+                    ** Password did not match
+                 </div>
+                }
                 <div className="row mt-3">
                     <label className="col-2 col-form-label align-self-center ms-5 p-0">Category:</label>
                     <div className="col-4">
-                        <select className="form-select">
+                        <select className="form-select" value={category} onChange={e => setCategory(e.target.value)}>
                             <option value="1" selected>Student</option>
                             <option value="2">Staff</option>
                         </select>
