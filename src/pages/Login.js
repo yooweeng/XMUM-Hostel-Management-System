@@ -56,17 +56,36 @@ export default function Login() {
       <div className='container-fluid px-0'>
           <div className='row w-100'>
               <div className='col-6 ps-5 py-5 pe-0'>
-                  <h1>Login</h1>
-                  <p>student id: </p><input value={studentId} onChange={e => setStudentId(e.target.value)}/><br/>
-                  <p>password: </p><input value={password} onChange={e => setPassword(e.target.value)}/><br/><br/>
-                  Category: <select value={category} onChange={e => setCategory(e.target.value)}>
-                    <option value="student">Student</option>
-                    <option value="staff">Staff</option>
-                  </select><br/><br/>
-                  <button className='btn btn-primary' onClick={login}>Login</button>
-                  <Link to='/register'>
-                    <button className='btn btn-primary'>Register</button>
-                  </Link>
+                <div className='card shadow me-5 ms-2 mt-4 py-5'>
+                  <h1 className='ms-4 ps-2'>Login</h1>
+                  <div className='row mt-4'>
+                    <label className="col-2 col-form-label align-self-center p-0 ms-5">User ID:</label>
+                    <div className="col-4">
+                        <input type="text" className="form-control"/>
+                    </div>
+                  </div>
+                  <div className='row mt-3'>
+                    <label className="col-2 col-form-label align-self-center p-0 ms-5">Password:</label>
+                    <div className="col-4">
+                        <input type="password" className="form-control"/>
+                    </div>
+                  </div>
+                  <div className="row mt-3">
+                    <label className="col-2 col-form-label align-self-center ms-5 p-0">Category:</label>
+                    <div className="col-4">
+                        <select className="form-select">
+                            <option value="1" selected>Student</option>
+                            <option value="2">Staff</option>
+                        </select>
+                    </div>
+                  </div>
+                  <div className='row mt-5 offset-3'>
+                    <button className='btn btn-primary col-2 p-0' onClick={login}>Login</button>
+                    <Link className='col-2 p-0 ms-3' to='/register'>
+                        <button className='btn btn-primary col-12'>Register</button>
+                    </Link>
+                  </div>
+                </div>
               </div>
               <div className='col-6 p-0 mt-3 mb-5 sidebar-background'>
                 <LoginSideBar/>

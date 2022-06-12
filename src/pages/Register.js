@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import LoginHeaderBar from '../components/LoginHeaderBar'
 
 export default function Register() {
 
@@ -35,14 +36,71 @@ export default function Register() {
 
     return (
         <>
-            <h1>Register</h1>
-            <p>student id: </p><input type="text" value={studentId} onChange={e => setStudentId(e.target.value)}/><br/>
-            <p>first name: </p><input type="text" value={fname} onChange={e => setFname(e.target.value)}/><br/>
-            <p>last name: </p><input type="text" value={lname} onChange={e => setLname(e.target.value)}/><br/>
-            <p>email: </p><input type="text" value={email} onChange={e => setEmail(e.target.value)}/><br/>
-            <p>password: </p><input type="text" value={password} onChange={e => setPassword(e.target.value)}/><br/><br/>
-            <button type="button" onClick={register}>Register</button>
-            <Link to='/'><button>Back to Login</button></Link>
+            <LoginHeaderBar/>
+            <div className='card shadow ms-5 my-5 py-4 col-6'>
+                <h1 className='ms-4 ps-2'>Register</h1>
+                <div className='row mt-4'>
+                    <label className="col-2 col-form-label align-self-center p-0 ms-5">User ID:</label>
+                    <div className="col-4">
+                        <input type="text" className="form-control"/>
+                    </div>
+                </div>
+                <div className='row mt-4'>
+                    <label className="col-2 col-form-label align-self-center p-0 ms-5">First Name:</label>
+                    <div className="col-4">
+                        <input type="text" className="form-control"/>
+                    </div>
+                </div>
+                <div className='row mt-4'>
+                    <label className="col-2 col-form-label align-self-center p-0 ms-5">Last Name:</label>
+                    <div className="col-4">
+                        <input type="text" className="form-control"/>
+                    </div>
+                </div>
+                <div className='row mt-4'>
+                    <label className="col-2 col-form-label align-self-center p-0 ms-5">Email:</label>
+                    <div className="col-4">
+                        <input type="text" className="form-control" value={email} onChange={e => setEmail(e.target.value)}/>
+                    </div>
+                {(email.length > 0) && (!email.includes('@')) &&
+                 <div className="form-text text-danger offset-3">
+                    ** Not a proper email format '@' missing
+                 </div>
+                }
+                {(email.length > 0) && (!email.includes('.')) &&
+                 <div className="form-text text-danger offset-3">
+                    ** Not a proper email format '.' missing
+                 </div>
+                }
+                </div>
+                <div className='row mt-3'>
+                    <label className="col-2 col-form-label align-self-center p-0 ms-5">Password:</label>
+                    <div className="col-4">
+                        <input type="password" className="form-control"/>
+                    </div>
+                </div>
+                <div className='row mt-3'>
+                    <label className="col-2 col-form-label align-self-center p-0 ms-5">Confirm Password:</label>
+                    <div className="col-4">
+                        <input type="password" className="form-control"/>
+                    </div>
+                </div>
+                <div className="row mt-3">
+                    <label className="col-2 col-form-label align-self-center ms-5 p-0">Category:</label>
+                    <div className="col-4">
+                        <select className="form-select">
+                            <option value="1" selected>Student</option>
+                            <option value="2">Staff</option>
+                        </select>
+                    </div>
+                </div>
+                <div className='row mt-5 offset-3'>
+                <button className='btn btn-primary col-2 p-0'>Register</button>
+                <Link className='col-2 p-0 ms-3' to='/'>
+                    <button className='btn btn-primary col-12'>Back</button>
+                </Link>
+                </div>
+            </div>
 
             <p id="output"></p>
         </>
