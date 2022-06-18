@@ -96,7 +96,7 @@ export default function Register() {
                     <label className="col-2 col-form-label align-self-center ms-5 p-0">Category:</label>
                     <div className="col-4">
                         <select className="form-select" value={category} onChange={e => setCategory(e.target.value)}>
-                            <option value="1" selected>Student</option>
+                            <option value="1">Student</option>
                             <option value="2">Staff</option>
                         </select>
                     </div>

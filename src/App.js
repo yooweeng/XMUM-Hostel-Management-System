@@ -17,6 +17,7 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route path="/:item" element={<Mainpage/>}/>
           <Route path="/:item/:subitem" element={<Mainpage/>}/>
+          <Route path="/:item/:subitem/:subitem2" element={<Mainpage/>}/>
         </Routes>
       </LoginContext.Provider>
       <Footer/>

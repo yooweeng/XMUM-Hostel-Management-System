@@ -74,7 +74,7 @@ export default function Login() {
                     <label className="col-2 col-form-label align-self-center ms-5 p-0">Category:</label>
                     <div className="col-4">
                         <select className="form-select" value={category} onChange={e => setCategory(e.target.value)}>
-                            <option value="student" selected>Student</option>
+                            <option value="student">Student</option>
                             <option value="staff">Staff</option>
                         </select>
                     </div>

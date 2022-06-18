@@ -19,13 +19,14 @@ import ChangePassword from './settings/ChangePassword'
 import RoomDetails from './settings/RoomDetails'
 import Help from './settings/Help'
 import Home from './Home'
+import ViewHostel from './ViewHostel'
 
 export default function Mainpage() {
 
   const {loginDetails, setLoginDetails} = useContext(LoginContext)
   console.log(loginDetails)
 
-  const {item, subitem} = useParams()
+  const {item, subitem, subitem2} = useParams()
 
   return (
     <>
@@ -43,20 +44,29 @@ export default function Mainpage() {
           {(item === 'dashboard') &&
             <Dashboard/>
           }
-          {(item === 'hostelfunction' && subitem == null) &&
+          {(item === 'hosteloverview') &&
+            <ViewHostel/>
+          }
+          {(item === 'hostelfunction' && subitem == null && subitem2 == null) &&
             <HostelFunctions/>
           }
-          {(subitem === 'hostelapplication') &&
+          {(item === 'hostelfunction' && subitem === 'hostelapplication' && subitem2 == null) &&
             <HostelApplication/>
           }
-          {(subitem === 'changehostelperiod') &&
+          {(item === 'hostelfunction' && subitem === 'changehostelperiod' && subitem2 == null) &&
             <ChangeHostelPeriod/>
           }
-          {(subitem === 'requestroomcheckout') &&
+          {(item === 'hostelfunction' && subitem === 'requestroomcheckout' && subitem2 == null) &&
             <RequestRoomCheckout/>
           }
-          {(subitem === 'requestchangeroom') &&
+          {(item === 'hostelfunction' && subitem === 'requestchangeroom' && subitem2 == null) &&
             <RequestChangeRoom/>
+          }
+          {(item === 'hostelfunction' && subitem === 'hostelapplication' && subitem2 == 'hostelselect') &&
+            <ViewHostel name="Hostel Application" from={subitem}/>
+          }
+          {(item === 'hostelfunction' && subitem === 'requestchangeroom' && subitem2 == 'hostelselect') &&
+            <ViewHostel name="Request Room Exchange" from={subitem}/>
           }
           {(item === 'maintainence') &&
             <RequestMaintainence/>
