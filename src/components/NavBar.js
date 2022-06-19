@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginContext } from '../helper/Context'
 import xmumLogo from '../images/xmumLogo.png'
 import './css/NavBar.css'
 
 function NavBar() {
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext)
+
   return (
     <div>
       <div className='container-fluid text-center py-1 logo-background'>
@@ -47,10 +51,16 @@ function NavBar() {
                 Profile
               </button>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item disabled" href="#">Welcome, Ng Yoo Wee</a></li>
-                <li><a className="dropdown-item" href="#">Account Details</a></li>
+                <li><Link className="dropdown-item disabled" to="#">Welcome, Ng Yoo Wee</Link></li>
+                <li><Link className="dropdown-item" to="/settings/profile">Account Details</Link></li>
+                <li><Link className="dropdown-item" to="/settings/changepassword">Change Password</Link></li>
                 <li><hr className="dropdown-divider"/></li>
-                <li><a className="dropdown-item" href="/">Logout</a></li>
+                <li><Link className="dropdown-item" to="/" 
+                        onClick={() => {
+                          setLoginDetails(prevDetails => {
+                            return {...prevDetails, isAtLogin: true, token: null}
+                          });
+                        }}>Logout</Link></li>
               </ul>
             </div>
           </div>

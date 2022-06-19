@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { LoginContext } from '../helper/Context'
 import LoginSideBar from '../components/LoginSideBar'
@@ -8,11 +8,18 @@ import './css/Login.css'
 export default function Login() {
 
     const {loginDetails, setLoginDetails} = useContext(LoginContext)
-    const [userId,setUserId] = useState('')
-    const [password,setPassword] = useState('')
-    const [category,setCategory] = useState('student')
+    const [userId,setUserId] = useState('');
+    const [password,setPassword] = useState('');
+    const [category,setCategory] = useState('student');
 
+    console.log("login page")
     console.log(loginDetails)
+
+    useEffect(() => {
+        setLoginDetails(prevDetails => {
+            return {...prevDetails, token: null}
+        });
+    }, [])
 
     function login(){
         fetch('http://localhost:8080/api/v1/student')
@@ -28,17 +35,15 @@ export default function Login() {
             //if student id and password match for record in database
             if(userId === data[i].student_id && password === data[i].password){
                 if(category === 'student'){
-                    setLoginDetails(prevDetails =>{
-                        return {isLoggedIn: true, userCategory: 'student'}
-                    })
+                    fetchToken();
                 }
                 else if(category === 'staff'){
-                    setLoginDetails(prevDetails =>{
-                        return {isLoggedIn: true, userCategory: 'staff'}
-                    })
+                    // setLoginDetails(prevDetails =>{
+                    //     return {isLoggedIn: true, userCategory: 'staff'};
+                    // })
                 }
                 console.log('success')
-                console.log('LoginDetails: '+loginDetails.isLoggedIn+''+loginDetails.userCategory)
+                //console.log('LoginDetails: '+loginDetails.isLoggedIn+''+loginDetails.userCategory)
                 break;
             }
             else if(i === (data.length-1)){
@@ -47,11 +52,19 @@ export default function Login() {
         }
     }
 
+    function fetchToken(){
+        fetch('http://localhost:8080/api/v1/login?category=student')
+            .then(res => res.json())
+            .then(data => setLoginDetails(prevDetails => {
+                            return {...prevDetails, isAtLogin: false, token: data.token}
+                        }))
+    }
+
     return (
     <>
-      {loginDetails.isLoggedIn===true && (
-          <Navigate to="/home"/>
-      )}
+      {(loginDetails.token) &&
+        <Navigate to="/home"/>
+      }
       <LoginHeaderBar/>
       <div className='container-fluid px-0'>
           <div className='row w-100'>

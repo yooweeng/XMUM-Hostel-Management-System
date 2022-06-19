@@ -24,7 +24,7 @@ function Footer() {
                     </div>
                 </div>
                 <div className='row text-center'>
-                    <p>&#169; swe1904867</p>
+                    <p>&#169; XMUMHMS, swe1904867</p>
                 </div>
             </div>
         </footer>

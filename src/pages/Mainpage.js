@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar'
 import { LoginContext } from '../helper/Context'
@@ -19,21 +19,22 @@ import ChangePassword from './settings/ChangePassword'
 import RoomDetails from './settings/RoomDetails'
 import Help from './settings/Help'
 import Home from './Home'
-import ViewHostel from './ViewHostel'
+import ViewHostel from './viewhostel/ViewHostel'
+import Lobby from './viewhostel/Lobby'
 
 export default function Mainpage() {
 
   const {loginDetails, setLoginDetails} = useContext(LoginContext)
+  console.log("main page")
   console.log(loginDetails)
 
   const {item, subitem, subitem2} = useParams()
 
   return (
     <>
-      {/* {loginDetails.isLoggedIn === false && (
-        <Navigate to='/'/>
-      )
-      } */}
+      {(!loginDetails.token) &&
+        <Navigate to="/"/>
+      }
       <NavBar/>
       <div className='d-flex'>
         <SideBar/>
@@ -44,8 +45,11 @@ export default function Mainpage() {
           {(item === 'dashboard') &&
             <Dashboard/>
           }
-          {(item === 'hosteloverview') &&
+          {(item === 'hosteloverview' && subitem == null) &&
             <ViewHostel/>
+          }
+          {(item === 'hosteloverview' && subitem === 'lobby') &&
+            <Lobby block={subitem2.substring(5).toUpperCase()}/>
           }
           {(item === 'hostelfunction' && subitem == null && subitem2 == null) &&
             <HostelFunctions/>
@@ -62,10 +66,10 @@ export default function Mainpage() {
           {(item === 'hostelfunction' && subitem === 'requestchangeroom' && subitem2 == null) &&
             <RequestChangeRoom/>
           }
-          {(item === 'hostelfunction' && subitem === 'hostelapplication' && subitem2 == 'hostelselect') &&
+          {(item === 'hostelfunction' && subitem === 'hostelapplication' && subitem2 === 'hostelselect') &&
             <ViewHostel name="Hostel Application" from={subitem}/>
           }
-          {(item === 'hostelfunction' && subitem === 'requestchangeroom' && subitem2 == 'hostelselect') &&
+          {(item === 'hostelfunction' && subitem === 'requestchangeroom' && subitem2 === 'hostelselect') &&
             <ViewHostel name="Request Room Exchange" from={subitem}/>
           }
           {(item === 'maintainence') &&
