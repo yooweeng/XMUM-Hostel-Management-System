@@ -1,7 +1,49 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginContext } from '../helper/Context';
 
 function RequestMaintainence() {
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  const [activeUser, setActiveUser] = useState();
+  const [activeUserHostel, setActiveUserHostel] = useState();
+
+  useEffect(() => {
+    loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
+    let tokenType = loginDetails.token.slice(0,3);
+    if(tokenType == "stu"){
+      fetch('http://localhost:8080/api/v1/student')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].student_id){
+                  setActiveUser(data[i])
+                }
+              }
+            });
+      fetch('http://localhost:8080/api/v1/hostel')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].user_id){
+                  setActiveUserHostel(data[i])
+                }
+              }
+            });
+    }
+    else if(tokenType == "adm"){
+      fetch('http://localhost:8080/api/v1/admin')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].admin_id){
+                  setActiveUser(data[i])
+                }
+              }
+            })
+    }
+  }, [])
+
   return (
     <>
       <nav>
@@ -16,13 +58,29 @@ function RequestMaintainence() {
           <div className="row col-4">
             <label className="col-4 col-form-label">Campus ID:</label>
             <div className="col-8">
-              <input type="text" className="form-control" placeholder='SWE1904867' disabled/>
+              <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.student_id
+                }
+               disabled/>
             </div>
           </div>
           <div className="row col-4 offset-md-1">
             <label className="col-5 col-form-label">Student Name:</label>
             <div className="col-7">
-              <input type="text" className="form-control" placeholder='Ng Yoo Wee' disabled/>
+              <input type="text" className="form-control" 
+              placeholder=
+              {(!activeUser)
+                ?
+                'na'
+                :
+                activeUser.fullname
+              }
+               disabled/>
             </div>
           </div>
         </div>
@@ -30,13 +88,29 @@ function RequestMaintainence() {
           <div className="row col-4">
             <label className="col-4 col-form-label">Email:</label>
             <div className="col-8">
-              <input type="text" className="form-control" placeholder='SWE1904867@xmu.edu.my' disabled/>
+              <input type="text" className="form-control" 
+              placeholder=
+              {(!activeUser)
+                ?
+                'na'
+                :
+                activeUser.email
+              }
+              disabled/>
             </div>
           </div>
           <div className="row col-4 offset-md-1">
             <label className="col-5 col-form-label">Phone:</label>
             <div className="col-7">
-              <input type="text" className="form-control" placeholder='012-3456789' disabled/>
+              <input type="text" className="form-control" 
+              placeholder=
+              {(!activeUser)
+                ?
+                'na'
+                :
+                activeUser.phone_no
+              }
+               disabled/>
             </div>
           </div>
         </div>
@@ -69,7 +143,15 @@ function RequestMaintainence() {
           <div className="row col-4">
             <label className="col-4 col-form-label">Room No:</label>
             <div className="col-8">
-              <input type="text" className="form-control" placeholder='D1-123' disabled/>
+              <input type="text" className="form-control" 
+              placeholder=
+              {(!activeUserHostel)
+                ?
+                'na'
+                :
+                activeUserHostel.room_id
+              }
+               disabled/>
             </div>
           </div>
         </div>

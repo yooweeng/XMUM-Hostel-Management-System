@@ -1,7 +1,39 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginContext } from '../../helper/Context';
 
 function Profile() {
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  const [activeUser, setActiveUser] = useState();
+
+  useEffect(() => {
+    loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
+    let tokenType = loginDetails.token.slice(0,3);
+    if(tokenType == "stu"){
+      fetch('http://localhost:8080/api/v1/student')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].student_id){
+                  setActiveUser(data[i])
+                }
+              }
+            })
+    }
+    else if(tokenType == "adm"){
+      fetch('http://localhost:8080/api/v1/admin')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].admin_id){
+                  setActiveUser(data[i])
+                }
+              }
+            })
+    }
+  }, [])
+
   return (
     <div>
       <nav>
@@ -19,13 +51,29 @@ function Profile() {
             <div className="row col-4 mt-3">
               <label className="col-4 col-form-label">Student ID:</label>
               <div className="col-8">
-                <input type="text" className="form-control" placeholder='SWE1904867' disabled/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.student_id
+                }
+                 disabled/>
               </div>
             </div>
             <div className="row col-4 offset-md-1 mt-3">
               <label className="col-5 col-form-label">Student Name:</label>
               <div className="col-7">
-                <input type="text" className="form-control" placeholder='Ng Yoo Wee' disabled/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.fullname
+                }
+                 disabled/>
               </div>
             </div>
           </div>
@@ -33,13 +81,29 @@ function Profile() {
             <div className="row col-4">
               <label className="col-4 col-form-label">Nationality:</label>
               <div className="col-8">
-                <input type="text" className="form-control" placeholder='012-3456789' disabled/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.nationality
+                }
+                 disabled/>
               </div>
             </div>
             <div className="row col-5  offset-md-1 ">
               <label className="col-6 col-form-label">NRIC/Passport Number:</label>
               <div className="col-5">
-                <input type="text" className="form-control" placeholder='012345-01-1234' disabled/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.nric_passport
+                }
+                 disabled/>
               </div>
             </div>
           </div>

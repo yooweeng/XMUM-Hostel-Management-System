@@ -169,7 +169,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockd1'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>
@@ -206,7 +206,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockd2'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>
@@ -253,7 +253,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockd3'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>
@@ -290,7 +290,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockd4'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>
@@ -327,7 +327,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockd5'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>
@@ -377,7 +377,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockly2'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>
@@ -415,7 +415,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockly4'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>
@@ -453,7 +453,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockly5'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>
@@ -527,7 +527,7 @@ function ViewHostel(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <Link to='/hosteloverview/lobby/blockly9'>
-                                        <button type="submit" className="btn btn-primary float-end">View Inside</button>
+                                        <button type="submit" className="btn btn-primary float-end">View More</button>
                                     </Link>
                                 </div>
                             </div>

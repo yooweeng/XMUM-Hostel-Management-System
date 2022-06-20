@@ -1,7 +1,24 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginContext } from '../helper/Context';
 
 function Dashboard() {
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  const [activeUser, setActiveUser] = useState();
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/v1/student')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].student_id){
+                  setActiveUser(data[i])
+                }
+              }
+            })
+  }, [])
+
   return (
     <>
       <nav>
@@ -17,27 +34,69 @@ function Dashboard() {
           <tbody>
             <tr className='table-primary'>
                 <td>Status: </td>
-                <td>Active</td>
+                <td>
+                    {(!activeUser)
+                      ?
+                      <span>na</span>
+                      :
+                      <span>{activeUser.status}</span>
+                    }
+                </td>
               </tr>
             <tr>
               <td>Nationality: </td>
-              <td>Malaysian</td>
+              <td>
+                    {(!activeUser)
+                      ?
+                      <span>na</span>
+                      :
+                      <span>{activeUser.nationality}</span>
+                    }
+              </td>
             </tr>
             <tr className='table-primary'>
               <td>Student Name: </td>
-              <td>Ng Yoo Wee</td>
+              <td>
+                  {(!activeUser)
+                    ?
+                    <span>na</span>
+                    :
+                    <span>{activeUser.fullname}</span>
+                  }
+              </td>
             </tr>
             <tr>
               <td>Student ID: </td>
-              <td>SWE1904867</td>
+              <td>
+                  {(!activeUser)
+                    ?
+                    <span>na</span>
+                    :
+                    <span>{activeUser.student_id}</span>
+                  }
+              </td>
             </tr>
             <tr className='table-primary'>
               <td>NRIC/Passport Number: </td>
-              <td>012345-01-1234</td>
+              <td>
+                  {(!activeUser)
+                    ?
+                    <span>na</span>
+                    :
+                    <span>{activeUser.nric_passport}</span>
+                  }
+              </td>
             </tr>
             <tr>
               <td>Programme: </td>
-              <td>Bachelor in Software Engineering</td>
+              <td>
+                  {(!activeUser)
+                    ?
+                    <span>na</span>
+                    :
+                    <span>{activeUser.programme}</span>
+                  }
+              </td>
             </tr>
           </tbody>
         </table>

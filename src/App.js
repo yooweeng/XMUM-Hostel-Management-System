@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import ErrorPage from "./pages/ErrorPage";
 
 function App() {
-  const[loginDetails,setLoginDetails] = useState({token:null, isAuthorized:false, isAtLogin:true});
+  const[loginDetails,setLoginDetails] = useState({token:null, user:null, isAuthorized:false, isAtLogin:true});
 
   return (
     <div className="App">

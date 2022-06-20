@@ -34,6 +34,7 @@ export default function Mainpage() {
 
   useEffect(() => {
     loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
+    loginDetails.user = JSON.parse(sessionStorage.getItem("user"));
     if(loginDetails.token){
       setLoginDetails(prevDetails => {
         return {...prevDetails, isAtLogin: false, isAuthorized: true}

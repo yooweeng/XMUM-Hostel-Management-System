@@ -19,9 +19,10 @@ export default function Login() {
 
     useEffect(() => {
         setLoginDetails(prevDetails => {
-            return {...prevDetails, token: null}
+            return {...prevDetails, token: null, user: null}
         });
         sessionStorage.setItem("token",null);
+        sessionStorage.setItem("user",null);
     }, [])
 
     function validateForm(){
@@ -34,29 +35,28 @@ export default function Login() {
     }
 
     function login(){
-        fetch('http://localhost:8080/api/v1/student')
+        if(category === 'student'){
+            fetch('http://localhost:8080/api/v1/userdetail?category=student')
             .then(res => res.json())
             .then(data => verifyLogin(data))
+        }
+        else if(category === 'admin'){
+            fetch('http://localhost:8080/api/v1/userdetail?category=admin')
+            .then(res => res.json())
+            .then(data => verifyLogin(data))
+        }
     }
-    
+
     function verifyLogin(data){
 
         console.log(userId,password,data)
 
-        for(var i=0; i<data.length; i++){
+        for(let i=0; i<data.length; i++){
             //if student id and password match for record in database
-            if(userId === data[i].student_id && password === data[i].password){
-                if(category === 'student'){
-                    fetchToken();
-                    setIsValidForm(true);
-                }
-                else if(category === 'staff'){
-                    // setLoginDetails(prevDetails =>{
-                    //     return {isLoggedIn: true, userCategory: 'staff'};
-                    // })
-                }
+            if(userId === data[i].user_id && password === data[i].pw){
+                fetchToken(userId);
+                setIsValidForm(true);
                 console.log('success')
-                //console.log('LoginDetails: '+loginDetails.isLoggedIn+''+loginDetails.userCategory)
                 break;
             }
             else if(i === (data.length-1)){
@@ -66,15 +66,29 @@ export default function Login() {
         }
     }
 
-    function fetchToken(){
-        fetch('http://localhost:8080/api/v1/login?category=student')
-            .then(res => res.json())
-            .then(data => {
-                setLoginDetails(prevDetails => {
-                    return {...prevDetails, isAtLogin: false, token: data.token, isAuthorized: true}
-                });
-                sessionStorage.setItem("token",JSON.stringify(data.token));
-            })
+    function fetchToken(userId){
+        if(category === 'student'){
+            fetch('http://localhost:8080/api/v1/login?category=student')
+                .then(res => res.json())
+                .then(data => {
+                    setLoginDetails(prevDetails => {
+                        return {...prevDetails, isAtLogin: false, token: data.token, isAuthorized: true}
+                    });
+                    sessionStorage.setItem("token",JSON.stringify(data.token));
+                    sessionStorage.setItem("user",JSON.stringify(userId));
+                })
+        }
+        else if(category === 'admin'){
+            fetch('http://localhost:8080/api/v1/login?category=admin')
+                .then(res => res.json())
+                .then(data => {
+                    setLoginDetails(prevDetails => {
+                        return {...prevDetails, isAtLogin: false, token: data.token, isAuthorized: true}
+                    });
+                    sessionStorage.setItem("token",JSON.stringify(data.token));
+                    sessionStorage.setItem("user",JSON.stringify(userId));
+                })
+        }
     }
 
     return (
@@ -110,7 +124,7 @@ export default function Login() {
                     <div className="col-4">
                         <select className="form-select" value={category} onChange={e => setCategory(e.target.value)}>
                             <option value="student">Student</option>
-                            <option value="staff">Staff</option>
+                            <option value="admin">Admin</option>
                         </select>
                     </div>
                   </div>
