@@ -8,13 +8,13 @@ import Footer from "./components/Footer";
 import ErrorPage from "./pages/ErrorPage";
 
 function App() {
-  const[loginDetails,setLoginDetails] = useState({isAtLogin:true, token:null});
+  const[loginDetails,setLoginDetails] = useState({token:null, isAuthorized:false, isAtLogin:true});
 
   return (
     <div className="App">
       <LoginContext.Provider value={{loginDetails,setLoginDetails}}>
-        {//no token and not at login page, then show error page
-          (!loginDetails.token && (loginDetails.isAtLogin === false)) 
+        {//not authorized and not at login page
+          (!loginDetails.isAuthorized && !loginDetails.isAtLogin) 
           ?
           <ErrorPage/>
           :

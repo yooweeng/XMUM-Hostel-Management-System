@@ -5,9 +5,9 @@ function Dashboard() {
   return (
     <>
       <nav>
-        <ol class="breadcrumb font-breadcrumb">
-          <li class="breadcrumb-item"><Link to="/home">Home</Link></li>
-          <li class="breadcrumb-item active">Dashboard</li>
+        <ol className="breadcrumb font-breadcrumb">
+          <li className="breadcrumb-item"><Link to="/home">Home</Link></li>
+          <li className="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
       <h1>Dashboard</h1>

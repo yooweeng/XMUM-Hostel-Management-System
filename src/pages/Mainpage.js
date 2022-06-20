@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar'
@@ -21,6 +21,8 @@ import Help from './settings/Help'
 import Home from './Home'
 import ViewHostel from './viewhostel/ViewHostel'
 import Lobby from './viewhostel/Lobby'
+import ErrorPage from './ErrorPage'
+import Footer from '../components/Footer'
 
 export default function Mainpage() {
 
@@ -30,11 +32,22 @@ export default function Mainpage() {
 
   const {item, subitem, subitem2} = useParams()
 
+  useEffect(() => {
+    loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
+    if(loginDetails.token){
+      setLoginDetails(prevDetails => {
+        return {...prevDetails, isAtLogin: false, isAuthorized: true}
+      });
+    }
+    else{
+      setLoginDetails(prevDetails => {
+      return {...prevDetails, isAtLogin: false}
+    })
+    }
+  }, [])
+
   return (
     <>
-      {(!loginDetails.token) &&
-        <Navigate to="/"/>
-      }
       <NavBar/>
       <div className='d-flex'>
         <SideBar/>

@@ -60,6 +60,7 @@ function NavBar() {
                           setLoginDetails(prevDetails => {
                             return {...prevDetails, isAtLogin: true, token: null}
                           });
+                          sessionStorage.setItem("token",null);
                         }}>Logout</Link></li>
               </ul>
             </div>

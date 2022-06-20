@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Footer from '../components/Footer'
 import LoginHeaderBar from '../components/LoginHeaderBar'
 
 export default function Register() {
@@ -108,8 +109,6 @@ export default function Register() {
                 </Link>
                 </div>
             </div>
-
-            <p id="output"></p>
         </>
     )
 }

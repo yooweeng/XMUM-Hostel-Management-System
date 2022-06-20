@@ -4,6 +4,7 @@ import { LoginContext } from '../helper/Context'
 import LoginSideBar from '../components/LoginSideBar'
 import LoginHeaderBar from '../components/LoginHeaderBar'
 import './css/Login.css'
+import Footer from '../components/Footer'
 
 export default function Login() {
 
@@ -11,6 +12,7 @@ export default function Login() {
     const [userId,setUserId] = useState('');
     const [password,setPassword] = useState('');
     const [category,setCategory] = useState('student');
+    const [isValidForm,setIsValidForm] = useState(true);
 
     console.log("login page")
     console.log(loginDetails)
@@ -19,7 +21,17 @@ export default function Login() {
         setLoginDetails(prevDetails => {
             return {...prevDetails, token: null}
         });
+        sessionStorage.setItem("token",null);
     }, [])
+
+    function validateForm(){
+        if(userId === '' || password === ''){
+            setIsValidForm(false);
+        }
+        else{
+            login();
+        }
+    }
 
     function login(){
         fetch('http://localhost:8080/api/v1/student')
@@ -36,6 +48,7 @@ export default function Login() {
             if(userId === data[i].student_id && password === data[i].password){
                 if(category === 'student'){
                     fetchToken();
+                    setIsValidForm(true);
                 }
                 else if(category === 'staff'){
                     // setLoginDetails(prevDetails =>{
@@ -48,6 +61,7 @@ export default function Login() {
             }
             else if(i === (data.length-1)){
                 console.log('fail')
+                setIsValidForm(false);
             }
         }
     }
@@ -55,9 +69,12 @@ export default function Login() {
     function fetchToken(){
         fetch('http://localhost:8080/api/v1/login?category=student')
             .then(res => res.json())
-            .then(data => setLoginDetails(prevDetails => {
-                            return {...prevDetails, isAtLogin: false, token: data.token}
-                        }))
+            .then(data => {
+                setLoginDetails(prevDetails => {
+                    return {...prevDetails, isAtLogin: false, token: data.token, isAuthorized: true}
+                });
+                sessionStorage.setItem("token",JSON.stringify(data.token));
+            })
     }
 
     return (
@@ -70,6 +87,11 @@ export default function Login() {
           <div className='row w-100'>
               <div className='col-6 ps-5 py-5 pe-0'>
                 <div className='card shadow me-5 ms-2 mt-4 py-5'>
+                  {!isValidForm &&
+                    <p className='bg-danger text-light mx-4 ps-4 py-2'>
+                        Invalid credentials, please try again
+                    </p>
+                  }
                   <h1 className='ms-4 ps-2'>Login</h1>
                   <div className='row mt-4'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">User ID:</label>
@@ -93,7 +115,7 @@ export default function Login() {
                     </div>
                   </div>
                   <div className='row mt-5 offset-3'>
-                    <button className='btn btn-primary col-2 p-0' onClick={login}>Login</button>
+                    <button className='btn btn-primary col-2 p-0' onClick={validateForm}>Login</button>
                     <Link className='col-2 p-0 ms-3' to='/register'>
                         <button className='btn btn-primary col-12'>Register</button>
                     </Link>
