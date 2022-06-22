@@ -8,11 +8,14 @@ function NavBar() {
 
   const {loginDetails, setLoginDetails} = useContext(LoginContext);
   const [activeUser, setActiveUser] = useState();
-  let tokenType
+  let tokenType;
 
   useEffect(() => {
     loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
-    tokenType = loginDetails.token.slice(0,3);
+    //if token exist
+    if(loginDetails.token != null){
+      tokenType = loginDetails.token.slice(0,3);
+    }
     if(tokenType == "stu"){
       fetch('http://localhost:8080/api/v1/student')
             .then(res => res.json())

@@ -6,7 +6,12 @@ import StudentHome from './student/StudentHome'
 
 function Home() {
 
-  let tokenType = JSON.parse(sessionStorage.getItem("token")).slice(0,3);
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
 
   return (
     <>
