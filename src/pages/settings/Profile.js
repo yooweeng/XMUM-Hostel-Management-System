@@ -26,7 +26,7 @@ function Profile() {
             .then(res => res.json())
             .then(data => {
               for(let i=0; i<data.length; i++){
-                if(loginDetails.user == data[i].admin_id){
+                if(loginDetails.user == data[i].adminId){
                   setActiveUser(data[i])
                 }
               }

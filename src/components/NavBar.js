@@ -10,12 +10,13 @@ function NavBar() {
   const [activeUser, setActiveUser] = useState();
   let tokenType;
 
+  loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
+  //if token exist
+  if(loginDetails.token != null){
+    tokenType = loginDetails.token.slice(0,3);
+  }
+
   useEffect(() => {
-    loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
-    //if token exist
-    if(loginDetails.token != null){
-      tokenType = loginDetails.token.slice(0,3);
-    }
     if(tokenType == "stu"){
       fetch('http://localhost:8080/api/v1/student')
             .then(res => res.json())
@@ -32,14 +33,14 @@ function NavBar() {
             .then(res => res.json())
             .then(data => {
               for(let i=0; i<data.length; i++){
-                if(loginDetails.user == data[i].admin_id){
+                if(loginDetails.user == data[i].adminId){
                   setActiveUser(data[i])
                 }
               }
             })
     }
   }, [])
-
+  
   return (
     <div>
       <div className='container-fluid text-center py-1 logo-background'>
@@ -88,11 +89,14 @@ function NavBar() {
                 <li>
                   <Link className="dropdown-item disabled" to="#">
                     Welcome, 
-                    {(!activeUser)
-                      ?
+                    {(!activeUser) &&
                       <span> Guest</span>
-                      :
-                      <span>{activeUser.fullname}</span>
+                    }
+                    {(activeUser && (tokenType == "stu")) &&
+                      <span> {activeUser.fullname}</span>
+                    }
+                    {(activeUser && (tokenType == "adm")) &&
+                      <span> {activeUser.name}</span>
                     }
                   </Link>
                   </li>
