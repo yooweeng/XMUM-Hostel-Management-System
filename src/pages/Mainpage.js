@@ -23,6 +23,7 @@ import ViewHostel from './viewhostel/ViewHostel'
 import Lobby from './viewhostel/Lobby'
 import ErrorPage from './ErrorPage'
 import Footer from '../components/Footer'
+import AddAnnouncement from './admin/AddAnnouncement'
 
 export default function Mainpage() {
 
@@ -109,6 +110,9 @@ export default function Mainpage() {
           }
           {(item === 'settings' && subitem === 'help') &&
             <Help/>
+          }
+          {(item === 'addannouncement') &&
+            <AddAnnouncement/>
           }
           </section>
       </div>

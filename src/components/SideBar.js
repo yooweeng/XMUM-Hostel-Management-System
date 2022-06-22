@@ -7,7 +7,7 @@ function SideBar() {
 
   let token = JSON.parse(sessionStorage.getItem("token"));
   let tokenType;
-  
+
   if(token != null){
     tokenType = token.slice(0,3);
   }
@@ -77,7 +77,7 @@ function SideBar() {
                             </Link>
                         </li>
                         <li className='nav-item navigation-item mt-1'>
-                            <Link to='/home' className='nav-link text-light text-center pl-4'>
+                            <Link to='/addannouncement' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-envelope-fill size-icon"></i><br/>
                             Add Announcement
                             </Link>

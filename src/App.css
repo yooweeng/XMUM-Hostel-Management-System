@@ -5,3 +5,7 @@
 .center-justify{
     justify-content: center;
 }
+
+.whitespace-break-line{
+    white-space: pre-line;
+}
