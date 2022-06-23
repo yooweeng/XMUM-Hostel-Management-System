@@ -24,6 +24,7 @@ import Lobby from './viewhostel/Lobby'
 import ErrorPage from './ErrorPage'
 import Footer from '../components/Footer'
 import AddAnnouncement from './admin/AddAnnouncement'
+import AdminList from './admin/AdminList'
 
 export default function Mainpage() {
 
@@ -110,6 +111,9 @@ export default function Mainpage() {
           }
           {(item === 'settings' && subitem === 'help') &&
             <Help/>
+          }
+          {(item === 'adminlist') &&
+            <AdminList/>
           }
           {(item === 'addannouncement') &&
             <AddAnnouncement/>

@@ -28,6 +28,12 @@ function AdminList() {
   
   return (
     <>
+      <nav className='ms-4'>
+          <ol className="breadcrumb font-breadcrumb">
+          <li className="breadcrumb-item"><Link to="/home">Home</Link></li>
+          <li className="breadcrumb-item active">Admin List</li>
+          </ol>
+      </nav>
       <div className='container mt-3 ms-3'>
         <h1>Administrator List</h1>
         <table className="table table-striped mt-5">

@@ -44,6 +44,7 @@ function HostelApplication() {
       },
       body: JSON.stringify(
           {
+            'category' : 'application',
             'existingStudent' : isExistingStudent,
             'studentId': studentId,
             'fullname': fullname,

@@ -1,8 +1,8 @@
 import React from 'react'
 import './css/Home.css'
 import '../App.css'
-import AdminList from './admin/AdminList'
 import StudentHome from './student/StudentHome'
+import PendingHostelRequest from './admin/PendingHostelRequest'
 
 function Home() {
 
@@ -19,7 +19,7 @@ function Home() {
           <StudentHome/>
         }
         {(tokenType == "adm") &&
-          <AdminList/>
+          <PendingHostelRequest/>
         }
     </>
   )

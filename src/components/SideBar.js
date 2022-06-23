@@ -70,8 +70,14 @@ function SideBar() {
                 <nav className='navbar navbar-expand d-flex flex-column flex-grow align-item-center h-100 pb-5' id='sidebar'>
                     <Link to='/home'><img className='logo-hms mt-3' src={hmsLogo} alt='Logo of Hostel Management System'/></Link>
                     <ul className='navbar-nav d-flex flex-column mt-5'>
-                        <li className='nav-item navigation-item'>
-                            <Link to='/home' className='nav-link text-light text-center pl-4'>
+                        <li className='nav-item navigation-item mt-1'>
+                            <Link to='/home' className='nav-link text-light text-center pl-1'>
+                            <i className="bi bi-box-arrow-in-down-right size-icon"></i><br/>
+                            Pending Hostel<br/>Request
+                        </Link>
+                        </li><br/>
+                        <li className='nav-item navigation-item mt-2'>
+                            <Link to='/adminlist' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-file-earmark-person-fill size-icon"></i><br/>
                             Admin List
                             </Link>
@@ -83,18 +89,12 @@ function SideBar() {
                             </Link>
                         </li>
                         <li className='nav-item navigation-item mt-1'>
-                            <Link to='/home' className='nav-link text-light text-center pl-1'>
-                            <i className="bi bi-box-arrow-in-down-right size-icon"></i><br/>
-                            Pending Hostel<br/>Request
-                        </Link>
-                        </li><br/>
-                        <li className='nav-item navigation-item mt-1'>
                             <Link to='/home' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-file-ruled-fill size-icon"></i><br/>
                             Hostel Request Record/Log
                             </Link>
                         </li><br/>
-                        <li className='nav-item navigation-item mt-1'>
+                        <li className='nav-item navigation-item mt-2'>
                             <Link to='/home' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-receipt size-icon"></i><br/>
                             Generate Report
