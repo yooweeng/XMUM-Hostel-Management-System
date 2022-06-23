@@ -1,52 +1,26 @@
-import React, { createRef, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-function PendingHostelRequest() {
+function HostelRequestRecord() {
 
   const [applicationRequestList, setApplicationRequestList] = useState();
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/v1/applicationrequest?status=pending')
-            .then(res => res.json())
-            .then(data => {setApplicationRequestList(data)})
+      fetch('http://localhost:8080/api/v1/applicationrequest')
+              .then(res => res.json())
+              .then(data => {setApplicationRequestList(data)})
   }, [])
 
-  function approveApplicationRequest(id){
-    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
-      method: 'PUT',
-      headers: {
-          'Content-type': 'application/json'
-      },
-      body: JSON.stringify(
-        {
-            'status': 'Approved'
-        }
-      )
-    })
-    .then(res => res.json())
-    .then(data => data)
-  }
-
-  function rejectApplicationRequest(id){
-    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
-      method: 'PUT',
-      headers: {
-          'Content-type': 'application/json'
-      },
-      body: JSON.stringify(
-        {
-            'status': 'Rejected'
-        }
-      )
-    })
-    .then(res => res.json())
-    .then(data => data)
-  }
-  
   return (
     <>
-        <div className='container mt-2 ms-3'>
-          <h1>Pending Hostel Request</h1>
+        <nav className='ms-4'>
+            <ol className="breadcrumb font-breadcrumb">
+            <li className="breadcrumb-item"><Link to="/home">Home</Link></li>
+            <li className="breadcrumb-item active">Hostel Request Record/Log</li>
+            </ol>
+        </nav>
+        <div className='container ms-3'>
+          <h1>Hostel Request Record / Log</h1>
           <table className="table table-striped mt-5">
             <thead>
               <tr>
@@ -78,7 +52,7 @@ function PendingHostelRequest() {
                     <td>{item.status}</td>
                     <td>
                       <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#modalTarget${item.applicationId}`}>
-                        Check
+                        View Details
                       </button>
                       <div className="modal fade" id={`modalTarget${item.applicationId}`}>
                         <div className="modal-dialog">
@@ -117,23 +91,6 @@ function PendingHostelRequest() {
                               Remark(s): {item.remarks}
                             </div>
                             <div className="modal-footer">
-                              <Link to="/viewapplication" state={item}>
-                                <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
-                              </Link>
-                              <a href='/home'>
-                                <button type="button" className="btn btn-success" data-bs-dismiss="modal"
-                                onClick={() => {
-                                  approveApplicationRequest(item.applicationId);
-                                }}>
-                                  Approve</button>
-                              </a>
-                              <a href='/home'>
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" 
-                                onClick={() => {
-                                  rejectApplicationRequest(item.applicationId);
-                                }}>
-                                  Reject</button>
-                              </a>
                               <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
                             </div>
                           </div>
@@ -150,4 +107,4 @@ function PendingHostelRequest() {
   )
 }
 
-export default PendingHostelRequest
+export default HostelRequestRecord

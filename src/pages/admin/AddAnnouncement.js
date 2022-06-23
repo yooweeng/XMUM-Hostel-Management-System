@@ -44,7 +44,6 @@ function AddAnnouncement() {
       },
       body: JSON.stringify(
         {
-            'seq_id': id,
             'dateTime': dateTime,
             'title': title,
             'content': content
@@ -172,7 +171,7 @@ function AddAnnouncement() {
                                 <a href='/addannouncement'>
                                   <button type="button" className="btn btn-success" data-bs-dismiss="modal" 
                                   onClick={() => {
-                                    let editAnnouncementDateTime = new Date(Date.now()).toJSON();
+                                    let editAnnouncementDateTime = new Date(Date.now()).toJSON().toString();
                                     updateAnnouncement(item.seq_id, editAnnouncementDateTime, editAnnouncementTitle, editAnnouncementDescription);
                                   }}>
                                     Apply changes</button>

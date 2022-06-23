@@ -25,6 +25,8 @@ import ErrorPage from './ErrorPage'
 import Footer from '../components/Footer'
 import AddAnnouncement from './admin/AddAnnouncement'
 import AdminList from './admin/AdminList'
+import ViewApplication from './admin/ViewApplication'
+import HostelRequestRecord from './admin/HostelRequestRecord'
 
 export default function Mainpage() {
 
@@ -117,6 +119,12 @@ export default function Mainpage() {
           }
           {(item === 'addannouncement') &&
             <AddAnnouncement/>
+          }
+          {(item === 'viewapplication') &&
+            <ViewApplication/>
+          }
+          {(item === 'requestlog') &&
+            <HostelRequestRecord/>
           }
           </section>
       </div>

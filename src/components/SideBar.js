@@ -89,7 +89,7 @@ function SideBar() {
                             </Link>
                         </li>
                         <li className='nav-item navigation-item mt-1'>
-                            <Link to='/home' className='nav-link text-light text-center pl-4'>
+                            <Link to='/requestlog' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-file-ruled-fill size-icon"></i><br/>
                             Hostel Request Record/Log
                             </Link>
