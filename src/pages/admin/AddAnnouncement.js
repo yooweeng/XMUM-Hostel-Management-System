@@ -7,6 +7,10 @@ function AddAnnouncement() {
         "July", "August", "September", "October", "November", "December"];
 
   const [announcementList, setAnnouncementList] = useState();
+  const [addAnnouncementTitle, setAddAnnouncementTitle] = useState('');
+  const [addAnnouncementDescription, setAddAnnouncementDescription] = useState('');
+  const [editAnnouncementTitle, setEditAnnouncementTitle] = useState('');
+  const [editAnnouncementDescription, setEditAnnouncementDescription] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/announcement')
@@ -14,8 +18,26 @@ function AddAnnouncement() {
             .then(data => {setAnnouncementList(data)})
   }, [])
 
+  function addAnnouncement(dateTime, title, content){
+    fetch('http://localhost:8080/api/v1/announcement',{
+      method: 'POST',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+          {
+            'dateTime': dateTime,
+            'title': title,
+            'content': content
+          }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
+  }
+
   function updateAnnouncement(id, dateTime, title, content){
-    fetch(`http://localhost:5000/api/v1/customer/${id}`,{
+    fetch(`http://localhost:8080/api/v1/announcement/${id}`,{
       method: 'PUT',
       headers: {
           'Content-type': 'application/json'
@@ -30,7 +52,18 @@ function AddAnnouncement() {
       )
     })
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => data)
+  }
+
+  function deleteAnnouncement(id){
+    fetch(`http://localhost:8080/api/v1/announcement/${id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => data)
   }
 
   return (
@@ -48,17 +81,24 @@ function AddAnnouncement() {
                 <div className="row mt-4">
                     <label className="col-2 col-form-label">Announcement Title:</label>
                     <div className="col-4">
-                    <input type="text" className="form-control"/>
+                    <input type="text" className="form-control" value={addAnnouncementTitle} onChange={e => setAddAnnouncementTitle(e.target.value)}/>
                 </div>
                 <div className='row mt-4'>
                     <label className="col-2 col-form-label">Description:</label>
                     <div className="col-10">
-                        <textarea rows='2' className="form-control feedback-textbox"/>
+                        <textarea rows='2' className="form-control feedback-textbox" value={addAnnouncementDescription} onChange={e => setAddAnnouncementDescription(e.target.value)}/>
                     </div>
                 </div>
                 <div className='row mt-4'>
                     <div className='col'>
-                        <button type="submit" className="btn btn-primary float-end">Add Announcement</button>
+                      <a href='addannouncement'>
+                        <button type="submit" className="btn btn-primary float-end" 
+                        onClick={() => {
+                          let addAnnouncementDateTime = new Date(Date.now()).toJSON();
+                          addAnnouncement(addAnnouncementDateTime, addAnnouncementTitle, addAnnouncementDescription);
+                          }}>
+                            Add Announcement</button>
+                      </a>
                     </div>
                 </div>
             </div>
@@ -74,7 +114,7 @@ function AddAnnouncement() {
 
             return(
                 <div className="col-6" key={item.seq_id}>
-                    <div className="card shadow p-2">
+                    <div className="card shadow p-2 mt-4">
                         <div className="card-body">
                         <div className='row'>
                             <h5 className="card-title col-8">{item.title}</h5>
@@ -98,8 +138,9 @@ function AddAnnouncement() {
                                 The announcement will be permenantly remove and also revoke from the student announcement site.
                               </div>
                               <div className="modal-footer">
-                                <a href='/home'>
-                                  <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={() => {}}>Yes, I confirm</button>
+                                <a href='/addannouncement'>
+                                  <button type="button" className="btn btn-success" data-bs-dismiss="modal" 
+                                  onClick={() => {deleteAnnouncement(item.seq_id)}}>Yes, I confirm</button>
                                 </a>
                                 <button type="button" className="btn btn-danger" data-bs-dismiss="modal">No</button>
                               </div>
@@ -118,18 +159,23 @@ function AddAnnouncement() {
                                     <label className="col-form-label">Announcement Title:</label>
                                 </div>
                                 <div className="row col-8 mx-3">
-                                    <input type="text" className="form-control" value={item.title} onChange={() => {}}/>
+                                    <input type="text" className="form-control" onChange={e => setEditAnnouncementTitle(e.target.value)}/>
                                 </div>
                                 <div className="row mx-3 mt-3">
                                     <label className="col-form-label">Description:</label>
                                 </div>
                                 <div className="row mx-3">
-                                    <textarea rows='10' className="form-control feedback-textbox" value={item.content} onChange={() => {}}/>
+                                    <textarea rows='10' className="form-control feedback-textbox" onChange={e => setEditAnnouncementDescription(e.target.value)}/>
                                 </div>
                               </div>
                               <div className="modal-footer">
-                                <a href='/home'>
-                                  <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={() => {}}>Apply changes</button>
+                                <a href='/addannouncement'>
+                                  <button type="button" className="btn btn-success" data-bs-dismiss="modal" 
+                                  onClick={() => {
+                                    let editAnnouncementDateTime = new Date(Date.now()).toJSON();
+                                    updateAnnouncement(item.seq_id, editAnnouncementDateTime, editAnnouncementTitle, editAnnouncementDescription);
+                                  }}>
+                                    Apply changes</button>
                                 </a>
                                 <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Back</button>
                               </div>
