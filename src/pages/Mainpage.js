@@ -27,6 +27,7 @@ import AddAnnouncement from './admin/AddAnnouncement'
 import AdminList from './admin/AdminList'
 import ViewApplication from './admin/ViewApplication'
 import HostelRequestRecord from './admin/HostelRequestRecord'
+import GenerateReport from './admin/GenerateReport'
 
 export default function Mainpage() {
 
@@ -125,6 +126,9 @@ export default function Mainpage() {
           }
           {(item === 'requestlog') &&
             <HostelRequestRecord/>
+          }
+          {(item === 'generatereport') &&
+            <GenerateReport/>
           }
           </section>
       </div>

@@ -95,13 +95,13 @@ function SideBar() {
                             </Link>
                         </li><br/>
                         <li className='nav-item navigation-item mt-2'>
-                            <Link to='/home' className='nav-link text-light text-center pl-4'>
+                            <Link to='/generatereport' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-receipt size-icon"></i><br/>
                             Generate Report
                             </Link>
                         </li>
                         <li className='nav-item navigation-item mt-1'>
-                            <Link to='/home' className='nav-link text-light text-center pl-4'>
+                            <Link to='/settings' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-sliders size-icon"></i><br/>
                             Settings
                             </Link>

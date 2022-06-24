@@ -7,6 +7,14 @@ import roomDetailsImg from '../../images/settingsRoomDetails.png'
 import { Link } from 'react-router-dom'
 
 function Settings() {
+
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+  
   return (
     <>
       <nav>
@@ -43,19 +51,21 @@ function Settings() {
             </div>
           </Link>
         </div>
-        <div className="col">
-          <Link to='/settings/roomdetail'>
-            <div className="row card shadow text-dark bg-primary me-0">
-              <div className="row card-body">
-                <img src={roomDetailsImg} className="card-img-left col-6" height="150" alt="..."/>
-                <div className='col-6 center-card'>
-                  <p className="card-text">Function to view room details</p>
-                  <h5 className="card-title">Room Details</h5>
+        {(tokenType == "stu") &&
+          <div className="col">
+            <Link to='/settings/roomdetail'>
+              <div className="row card shadow text-dark bg-primary me-0">
+                <div className="row card-body">
+                  <img src={roomDetailsImg} className="card-img-left col-6" height="150" alt="..."/>
+                  <div className='col-6 center-card'>
+                    <p className="card-text">Function to view room details</p>
+                    <h5 className="card-title">Room Details</h5>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        </div>
+            </Link>
+          </div>
+        }
         <div className="col">
           <Link to='/settings/help'>
             <div className="row card shadow text-dark bg-primary me-2">
