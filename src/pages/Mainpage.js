@@ -5,9 +5,9 @@ import SideBar from '../components/SideBar'
 import { LoginContext } from '../helper/Context'
 import HostelFunctions from "./student/hostelfunctions/HostelFunctions";
 import Dashboard from "./Dashboard";
-import RequestMaintainence from "./RequestMaintainence";
-import ViewReport from "./ViewReport";
-import ProvideFeedback from "./ProvideFeedback";
+import RequestMaintainence from "./student/RequestMaintainence";
+import ViewReport from "./student/ViewReport";
+import ProvideFeedback from "./student/ProvideFeedback";
 import Settings from "./settings/Settings";
 import ChangeHostelPeriod from "./student/hostelfunctions/ChangeHostelPeriod";
 import HostelApplication from "./student/hostelfunctions/HostelApplication";
@@ -19,10 +19,8 @@ import ChangePassword from './settings/ChangePassword'
 import RoomDetails from './settings/RoomDetails'
 import Help from './settings/Help'
 import Home from './Home'
-import ViewHostel from './viewhostel/ViewHostel'
+import ViewHostel from './student/viewhostel/ViewHostel'
 import Lobby from './viewhostel/Lobby'
-import ErrorPage from './ErrorPage'
-import Footer from '../components/Footer'
 import AddAnnouncement from './admin/AddAnnouncement'
 import AdminList from './admin/AdminList'
 import ViewApplication from './admin/ViewApplication'

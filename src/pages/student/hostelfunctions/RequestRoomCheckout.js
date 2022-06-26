@@ -1,9 +1,35 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginContext } from '../../../helper/Context';
 
 function RequestRoomCheckout() {
 
-  const[isAgreeTnC,setIsAgreeTnC] = useState(false)
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  const [activeUser, setActiveUser] = useState();
+  const [activeUserHostel, setActiveUserHostel] = useState();
+
+  const [isAgreeTnC,setIsAgreeTnC] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/v1/student')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].student_id){
+                  setActiveUser(data[i]);
+                }
+              }
+            });
+    fetch('http://localhost:8080/api/v1/hostel')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].user_id){
+                  setActiveUserHostel(data[i])
+                }
+              }
+            });
+  }, []);
 
   return (
     <>
@@ -36,20 +62,44 @@ function RequestRoomCheckout() {
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Name:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.fullname
+                } 
+                disabled/>
             </div>
           </div>
           <div className='row form-group mt-3'>
             <div className="row col-6 ps-0">
               <label className="col-4 col-form-label">Student No:</label>
               <div className="col-8">
-                <input type="text" className="form-control"/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.student_id
+                } 
+                disabled/>
               </div>
             </div>
             <div className="row col-6">
               <label className="col-4 col-form-label">IC/Passport No:</label>
               <div className="col-8">
-                <input type="text" className="form-control"/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.nric_passport
+                } 
+                disabled/>
               </div>
             </div>
           </div>
@@ -57,13 +107,29 @@ function RequestRoomCheckout() {
             <div className="row col-6 ps-0">
               <label className="col-4 col-form-label">Date of Birth:</label>
               <div className="col-8">
-                <input type="text" className="form-control"/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.dob
+                } 
+                disabled/>
               </div>
             </div>
             <div className="row col-6">
               <label className="col-4 col-form-label">Contact No:</label>
               <div className="col-8">
-                <input type="text" className="form-control"/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.phone_no
+                } 
+                disabled/>
               </div>
             </div>
           </div>
@@ -71,13 +137,23 @@ function RequestRoomCheckout() {
           <div className="row col-6">
               <p className='col-4 m-0 ps-0'>Gender:</p>
               <div className="col-3 form-check ms-3">
-                <input className="form-check-input" type="checkbox"/>
+                {(activeUser && activeUser.gender === 'Male')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
                 <label className="form-check-label">
                   Male
                 </label>
               </div>
               <div className="col-3 form-check m-0">
-                <input className="form-check-input" type="checkbox"/>
+                {(activeUser && activeUser.gender === 'Female')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
                 <label className="form-check-label">
                   Female
                 </label>
@@ -86,13 +162,23 @@ function RequestRoomCheckout() {
             <div className="row col-6">
               <p className='col-4 m-0'>Maritial Status:</p>
               <div className="col-3 form-check ms-3">
-                <input className="form-check-input" type="checkbox"/>
+                {(activeUser && activeUser.maritialStatus === 'Single')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
                 <label className="form-check-label">
                   Single
                 </label>
               </div>
               <div className="col-3 form-check m-0">
-                <input className="form-check-input" type="checkbox"/>
+                {(activeUser && activeUser.maritialStatus === 'Married')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
                 <label className="form-check-label">
                   Married
                 </label>
@@ -103,44 +189,85 @@ function RequestRoomCheckout() {
             <div className="row col-6 ps-0">
               <label className="col-4 col-form-label">Email Address:</label>
               <div className="col-8">
-                <input type="text" className="form-control"/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.email
+                } 
+                disabled/>
               </div>
             </div>
             <div className="row col-6">
               <label className="col-4 col-form-label">Nationality/Country:</label>
               <div className="col-8">
-                <input type="text" className="form-control"/>
+                <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.nationality
+                } 
+                disabled/>
               </div>
             </div>
           </div>
           <div className="row mt-3">
             <p className='col-2 ps-0'>Religion:</p>
             <div className="col-1 form-check ms-2">
-              <input className="form-check-input" type="checkbox"/>
+              {(activeUser && activeUser.religion === 'Muslim')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
               <label className="form-check-label">
                 Muslim
               </label>
             </div>
             <div className="col-1 form-check m-0">
-              <input className="form-check-input" type="checkbox"/>
+              {(activeUser && activeUser.religion === 'Buddhist')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
               <label className="form-check-label">
                 Buddhist
               </label>
             </div>
             <div className="col-1 form-check m-0">
-              <input className="form-check-input" type="checkbox"/>
+              {(activeUser && activeUser.religion === 'Christian')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
               <label className="form-check-label">
                 Christian
               </label>
             </div>
             <div className="col-1 form-check m-0">
-              <input className="form-check-input" type="checkbox"/>
+              {(activeUser && activeUser.religion === 'Hindu')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
               <label className="form-check-label">
                 Hindu
               </label>
             </div>
             <div className="col-1 form-check m-0">
-              <input className="form-check-input" type="checkbox"/>
+              {(activeUser && activeUser.religion === 'Others')
+                  ?
+                  <input className="form-check-input" type="checkbox" checked readOnly/>
+                  :
+                  <input className="form-check-input" type="checkbox" checked={false} disabled/>
+                }
               <label className="form-check-label">
                 Others
               </label>
@@ -149,13 +276,29 @@ function RequestRoomCheckout() {
           <div className="row form-group mt-3">
             <label className="col-2 col-form-label px-0">Home Address:</label>
             <div className="col-10 ps-0">
-              <textarea rows='2' className="form-control"/>
+              <textarea rows='2' className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.address
+                } 
+                disabled/>
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Intake Date:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" 
+                placeholder=
+                {(!activeUser)
+                  ?
+                  'na'
+                  :
+                  activeUser.enrollmentDate
+                } 
+                disabled/>
             </div>
           </div>
           <div className='row border mt-4 text-center'>
@@ -203,7 +346,15 @@ function RequestRoomCheckout() {
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Unit Number:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" 
+              placeholder=
+              {(!activeUserHostel)
+                ?
+                'na'
+                :
+                activeUserHostel.room_id
+              } 
+              disabled/>
             </div>
           </div>
           <div className="row form-group mt-3">

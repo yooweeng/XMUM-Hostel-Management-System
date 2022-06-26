@@ -68,7 +68,8 @@ function HostelApplication() {
             'roommateName': roommateName,
             'roommatePhoneNo': roommatePhoneNo,
             'roommateNricPassport': roommateNricPassport,
-            'remarks': remarks
+            'remarks': remarks,
+            'status': 'Pending'
           }
       )
     })
@@ -180,7 +181,7 @@ function HostelApplication() {
                 ?
                 <input className="form-check-input" type="checkbox" checked readOnly/>
                 :
-                <input className="form-check-input" type="checkbox" disabled/>
+                <input className="form-check-input" type="checkbox" checked={false} disabled/>
                 }
                 <label className="form-check-label">
                   Male
@@ -191,7 +192,7 @@ function HostelApplication() {
                 ?
                 <input className="form-check-input" type="checkbox" checked readOnly/>
                 :
-                <input className="form-check-input" type="checkbox" disabled/>
+                <input className="form-check-input" type="checkbox" checked={false} disabled/>
                 }
                 <label className="form-check-label">
                   Female
