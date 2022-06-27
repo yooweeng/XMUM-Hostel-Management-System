@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import topDownMap from '../../../images/topDownMap.png'
-import D1 from '../../../images/D1.jpeg'
-import D2 from '../../../images/D2.jpeg'
-import D3 from '../../../images/D3.jpeg'
-import D4 from '../../../images/D4.jpeg'
-import D5 from '../../../images/D5.jpeg'
-import LY2 from '../../../images/LY2.jpeg'
-import LY4 from '../../../images/LY4.jpeg'
-import LY5 from '../../../images/LY5.jpeg'
-import LY7 from '../../../images/LY7.jpeg'
-import LY8 from '../../../images/LY8.jpeg'
-import LY9 from '../../../images/LY9.jpeg'
-import underConstruction from '../../../images/underConstruction.JPG'
-import '../../css/ViewHostel.css'
+import topDownMap from '../../images/topDownMap.png'
+import D1 from '../../images/D1.jpeg'
+import D2 from '../../images/D2.jpeg'
+import D3 from '../../images/D3.jpeg'
+import D4 from '../../images/D4.jpeg'
+import D5 from '../../images/D5.jpeg'
+import LY2 from '../../images/LY2.jpeg'
+import LY4 from '../../images/LY4.jpeg'
+import LY5 from '../../images/LY5.jpeg'
+import LY7 from '../../images/LY7.jpeg'
+import LY8 from '../../images/LY8.jpeg'
+import LY9 from '../../images/LY9.jpeg'
+import underConstruction from '../../images/underConstruction.JPG'
+import '../css/ViewHostel.css'
 
 function ViewHostel(props) {
 
@@ -166,13 +166,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 15.9
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockd1'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }
@@ -203,13 +196,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 15.9
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockd2'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }
@@ -250,13 +236,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 15.9
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockd3'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }
@@ -287,13 +266,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 15.9
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockd4'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }
@@ -324,13 +296,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 15.9
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockd5'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }
@@ -374,13 +339,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 17.6
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockly2'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }
@@ -412,13 +370,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 17.6
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockly4'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }
@@ -450,13 +401,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 17.6
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockly5'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }
@@ -524,13 +468,6 @@ function ViewHostel(props) {
                                 <span className='fw-bold'>Size of Room (m2): </span><br/>
                                 17.6
                             </p>
-                            <div className="row">
-                                <div className="col-12">
-                                    <Link to='/hosteloverview/lobby/blockly9'>
-                                        <button type="submit" className="btn btn-primary float-end">View More</button>
-                                    </Link>
-                                </div>
-                            </div>
                         </div>
                      </div>
                     }

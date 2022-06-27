@@ -19,8 +19,7 @@ import ChangePassword from './settings/ChangePassword'
 import RoomDetails from './settings/RoomDetails'
 import Help from './settings/Help'
 import Home from './Home'
-import ViewHostel from './student/viewhostel/ViewHostel'
-import Lobby from './student/viewhostel/Lobby'
+import ViewHostel from './student/ViewHostel'
 import AddAnnouncement from './admin/AddAnnouncement'
 import AdminList from './admin/AdminList'
 import ViewApplication from './admin/ViewApplication'
@@ -64,9 +63,6 @@ export default function Mainpage() {
           }
           {(item === 'hosteloverview' && subitem == null) &&
             <ViewHostel/>
-          }
-          {(item === 'hosteloverview' && subitem === 'lobby') &&
-            <Lobby block={subitem2.substring(5).toUpperCase()}/>
           }
           {(item === 'hostelfunction' && subitem == null && subitem2 == null) &&
             <HostelFunctions/>

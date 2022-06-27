@@ -6,7 +6,10 @@ function HostelApplication() {
 
   const {loginDetails, setLoginDetails} = useContext(LoginContext);
   const [activeUser, setActiveUser] = useState();
+
   const [isAgreeTnC,setIsAgreeTnC] = useState(false);
+  const [isValidForm, setIsValidForm] = useState(true);
+
   const [nickname, setNickname] = useState('');
   const [parentName1, setParentName1] = useState('');
   const [parentName2, setParentName2] = useState('');
@@ -33,9 +36,7 @@ function HostelApplication() {
             })
   }, []);
 
-  function addApplicationRequest(isExistingStudent,studentId,fullname,nickname,nricPassport,gender,dob,nationality,
-    programme,enrollmentDate,email,phoneNo,address,parentName1,parentName2,relationship1,relationship2,parentMobile1,
-    parentMobile2,isSelectedBlockD,roommateName,roommatePhoneNo,roommateNricPassport,remarks){
+  function addApplicationRequest(){
 
     fetch('http://localhost:8080/api/v1/applicationrequest',{
       method: 'POST',
@@ -44,20 +45,20 @@ function HostelApplication() {
       },
       body: JSON.stringify(
           {
-            'category' : 'application',
-            'existingStudent' : isExistingStudent,
-            'studentId': studentId,
-            'fullname': fullname,
+            'category' : 'Application',
+            'existingStudent' : true,
+            'studentId': activeUser.student_id,
+            'fullname': activeUser.fullname,
             'nickname': nickname,
-            'nricPassport': nricPassport,
-            'gender': gender,
-            'dob': dob,
-            'nationality': nationality,
-            'programme': programme,
-            'enrollmentDate': enrollmentDate,
-            'email': email,
-            'phoneNo': phoneNo,
-            'address': address,
+            'nricPassport': activeUser.nric_passport,
+            'gender': activeUser.gender,
+            'dob': activeUser.dob,
+            'nationality': activeUser.nationality,
+            'programme': activeUser.programme,
+            'enrollmentDate': activeUser.enrollmentDate,
+            'email': activeUser.email,
+            'phoneNo': activeUser.phone_no,
+            'address': activeUser.address,
             'parentName1': parentName1,
             'parentName2': parentName2,
             'relationship1': relationship1,
@@ -156,6 +157,11 @@ function HostelApplication() {
               <label className="col-4 col-form-label">Nick Name:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value ={nickname} onChange={e => {setNickname(e.target.value)}}/>
+                {((/\d/.test(nickname)) || (nickname === '')) && 
+                  <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid nickname
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -312,12 +318,22 @@ function HostelApplication() {
               <label className="col-4 col-form-label">Name 01:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={parentName1} onChange={e => {setParentName1(e.target.value)}}/>
+                {((/\d/.test(parentName1)) || (parentName1 === '')) && 
+                  <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid name
+                  </div>
+                }
               </div>
             </div>
             <div className="row col-6">
               <label className="col-4 col-form-label">Name 02:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={parentName2} onChange={e => {setParentName2(e.target.value)}}/>
+                {(/\d/.test(parentName2)) && 
+                  <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid name
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -326,12 +342,22 @@ function HostelApplication() {
               <label className="col-4 col-form-label">Relationship:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={relationship1} onChange={e => {setRelationship1(e.target.value)}}/>
+                {((/\d/.test(relationship1)) || (relationship1 === '')) && 
+                  <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid relationship
+                  </div>
+                }
               </div>
             </div>
             <div className="row col-6">
               <label className="col-4 col-form-label">Relationship:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={relationship2} onChange={e => {setRelationship2(e.target.value)}}/>
+                {(/\d/.test(relationship2)) && 
+                  <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid relationship
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -340,12 +366,22 @@ function HostelApplication() {
               <label className="col-4 col-form-label">Mobile No.:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={parentMobile1} onChange={e => {setParentMobile1(e.target.value)}}/>
+                {((RegExp(/^\p{L}/,'u').test(parentMobile1)) || (parentMobile1 === '')) && 
+                  <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid mobile number
+                  </div>
+                }
               </div>
             </div>
             <div className="row col-6">
               <label className="col-4 col-form-label">Mobile No.:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={parentMobile2} onChange={e => {setParentMobile2(e.target.value)}}/>
+                {(RegExp(/^\p{L}/,'u').test(parentMobile2)) && 
+                  <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid mobile number
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -400,6 +436,11 @@ function HostelApplication() {
               </tbody>
             </table>
           </div>
+          {(!isSelectedBlockD && !isSelectedBlockLY) && 
+            <div className="row form-text text-danger mt-0 pt-0 ps-3">
+              ** Please select at one of the options
+            </div>
+          }
           <div className='row border mt-4 text-center'>
             <h5 className='m-0 py-1'>Others</h5>
           </div>
@@ -407,6 +448,11 @@ function HostelApplication() {
             <label className="col-3 col-form-label ps-0">Name of Roomate (if applicable):</label>
             <div className="col-9">
               <input type="text" className="form-control" value={roommateName} onChange={e => {setRoommateName(e.target.value)}}/>
+              {((/\d/.test(roommateName)) || (roommateName === '')) && 
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid name
+                </div>
+              }
             </div>
           </div>
           <div className='row form-group mt-3'>
@@ -414,12 +460,22 @@ function HostelApplication() {
               <label className="col-4 col-form-label">Roomate Mobile No.:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={roommatePhoneNo} onChange={e => {setRoommatePhoneNo(e.target.value)}}/>
+                {((RegExp(/^\p{L}/,'u').test(roommatePhoneNo)) || (roommatePhoneNo === '')) && 
+                  <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid mobile number
+                  </div>
+                }
               </div>
             </div>
             <div className="row col-6">
               <label className="col-4 col-form-label">NRIC/Passport No.:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={roommateNricPassport} onChange={e => {setRoommateNricPassport(e.target.value)}}/>
+                {((RegExp(/^\p{L}/,'u').test(roommateNricPassport)) || (roommateNricPassport === '')) && 
+                  <div className="row form-text text-danger mt-0 pt-0 ps-3">
+                    ** Please provide a valid nric/passport number
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -469,15 +525,29 @@ function HostelApplication() {
               </label>
             </div>
           </div>
-          {isAgreeTnC 
-          ? <div className="form-group row">
+          {(isAgreeTnC) 
+          ? ((/\d/.test(nickname)) || (/\d/.test(parentName1)) || (/\d/.test(relationship1)) || (/\d/.test(parentName2)) || (/\d/.test(relationship2)) || 
+            (/\d/.test(roommateName)) || (RegExp(/^\p{L}/,'u').test(parentMobile1)) || (RegExp(/^\p{L}/,'u').test(parentMobile2)) || 
+            (RegExp(/^\p{L}/,'u').test(roommatePhoneNo)) || (RegExp(/^\p{L}/,'u').test(roommateNricPassport)) || (!isSelectedBlockD && !isSelectedBlockLY)) ||
+            (nickname === '') || (parentName1 === '') || (relationship1 === '') || (roommateName === '') ||
+            (roommatePhoneNo === '') || (roommateNricPassport === '') || (parentMobile1 === '')
+            ?
+            <div className="form-group row">
+              <div className="col-12 mt-4">
+                <Link to='/hostelfunction/hostelapplication'>
+                  <button type="submit" className="btn btn-primary float-end" onClick={() => {setIsValidForm(false);}}>
+                    Submit Form</button>
+                </Link>
+              </div>
+            </div>
+            :
+            <div className="form-group row">
               <div className="col-12 mt-4">
                 <button type="submit" className="btn btn-primary float-end" 
                 onClick={() => {
-                  addApplicationRequest(true,activeUser.student_id,activeUser.fullname,nickname,activeUser.nric_passport,activeUser.gender,activeUser.dob,
-                    activeUser.nationality,activeUser.programme,activeUser.enrollmentDate,activeUser.email,activeUser.phone_no,activeUser.address,parentName1,
-                    parentName2,relationship1,relationship2,parentMobile1,parentMobile2,isSelectedBlockD,roommateName,roommatePhoneNo,roommateNricPassport,remarks);
-                    alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.')
+                    setIsValidForm(true);
+                    addApplicationRequest();
+                    alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
                   }}>
                   Submit Form</button>
               </div>
@@ -487,6 +557,11 @@ function HostelApplication() {
                 ** It is required to read and accept the terms and conditions before submitting the form.
               </div>
             </div>
+          }
+          {(!isValidForm) &&
+            <label className="form-check-label text-danger">
+              Missing information some blocks are not been filled correct. Request submit unsuccessful.
+            </label>
           }
         </div>
       </form>

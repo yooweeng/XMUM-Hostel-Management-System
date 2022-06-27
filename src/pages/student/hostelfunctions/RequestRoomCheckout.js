@@ -10,6 +10,14 @@ function RequestRoomCheckout() {
 
   const [isAgreeTnC,setIsAgreeTnC] = useState(false);
 
+  const [parentName, setParentName] = useState('');
+  const [relationship, setRelationship] = useState('');
+  const [contactNo, setContactNo] = useState('');
+  const [checkoutDate, setCheckoutDate] = useState('');
+  const [checkoutTime, setCheckoutTime] = useState('');
+  const [reason, setReason] = useState('');
+
+
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/student')
             .then(res => res.json())
@@ -307,25 +315,19 @@ function RequestRoomCheckout() {
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Name:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" value={parentName} onChange={e => {setParentName(e.target.value)}}/>
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Relationship:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" value={relationship} onChange={e => {setRelationship(e.target.value)}}/>
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Contact No:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
-            </div>
-          </div>
-          <div className="row mt-3">
-            <label className="col-2 col-form-label ps-0">Email:</label>
-            <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" value={contactNo} onChange={e => {setContactNo(e.target.value)}}/>
             </div>
           </div>
           <div className='row border mt-4 text-center'>
@@ -334,13 +336,13 @@ function RequestRoomCheckout() {
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Date:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="date" className="form-control" value={checkoutDate} onChange={e => {setCheckoutDate(e.target.value)}}/>
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Time:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" value={checkoutTime} onChange={e => {setCheckoutTime(e.target.value)}}/>
             </div>
           </div>
           <div className="row mt-3">
@@ -360,7 +362,7 @@ function RequestRoomCheckout() {
           <div className="row form-group mt-3">
             <label className="col-2 col-form-label px-0">Reason:</label>
             <div className="col-10 ps-0">
-              <textarea rows='2' className="form-control"/>
+              <textarea rows='2' className="form-control" value={reason} onChange={e => {setReason(e.target.value)}}/>
             </div>
           </div>
           <div className='row border mt-4 text-center'>
