@@ -8,6 +8,7 @@ function NavBar() {
 
   const {loginDetails, setLoginDetails} = useContext(LoginContext);
   const [activeUser, setActiveUser] = useState();
+  const [announcementList, setAnnouncementList] = useState();
   let tokenType;
 
   loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
@@ -39,7 +40,11 @@ function NavBar() {
               }
             })
     }
+    fetch('http://localhost:8080/api/v1/announcement')
+          .then(res => res.json())
+          .then(data => setAnnouncementList(data))
   }, [])
+  console.log(announcementList)
   
   return (
     <div>
@@ -51,33 +56,33 @@ function NavBar() {
             </Link>
           </div>
           <div className='col-2'>
-            {(tokenType === "stu") &&
-              <a href='#' className='nav-link text-dark text-break' data-bs-toggle="modal" data-bs-target="#announcementModal">
-                <i className="bi bi-envelope-open-fill"></i><br/>
-                Announcement
-                <div className="modal fade" id="announcementModal">
-                  <div className="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">Announcement(s)</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+          {(tokenType === "stu") &&
+            <Link to="/home" className='nav-link text-dark text-break' data-bs-toggle="modal" data-bs-target="#announcementModal">
+              <i className="bi bi-envelope-open-fill"></i><br/>
+              Announcement
+            </Link> 
+          }
+            <div className="modal fade" id="announcementModal">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Announcement(s)</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  {announcementList && announcementList.map((item, index) => {
+                    return (
+                      <div key={item.seq_id} className="modal-body card shadow">
+                        <h5>{item.title}</h5>
+                        <span className='whitespace-break-line'>{item.content}</span>
                       </div>
-                      <div className="modal-body">
-                        Announcement 1
-                        <br/>content
-                      </div>
-                      <div className="modal-body">
-                        Announcement 2
-                        <br/>content
-                      </div>
-                      <div className="modal-footer">
-                        <button type="button" className="btn btn-success">Finish Reading</button>
-                      </div>
-                    </div>
+                    )
+                  })}
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-success" data-bs-dismiss="modal">Finish Reading</button>
                   </div>
                 </div>
-              </a> 
-            }
+              </div>
+            </div>
           </div>
           <div className='col-2 item-navbar'>
             <i className="bi bi-unlock-fill size-navbar-icon"></i><br/>

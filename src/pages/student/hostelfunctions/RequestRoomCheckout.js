@@ -9,6 +9,7 @@ function RequestRoomCheckout() {
   const [activeUserHostel, setActiveUserHostel] = useState();
 
   const [isAgreeTnC,setIsAgreeTnC] = useState(false);
+  const [isValidForm, setIsValidForm] = useState(true);
 
   const [parentName, setParentName] = useState('');
   const [relationship, setRelationship] = useState('');
@@ -38,6 +39,44 @@ function RequestRoomCheckout() {
               }
             });
   }, []);
+
+  function addRoomCheckoutRequest(){
+
+    fetch('http://localhost:8080/api/v1/applicationrequest',{
+      method: 'POST',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+          {
+            'category' : 'Checkout',
+            'existingStudent' : true,
+            'studentId': activeUser.student_id,
+            'fullname': activeUser.fullname,
+            'nricPassport': activeUser.nric_passport,
+            'gender': activeUser.gender,
+            'dob': activeUser.dob,
+            'nationality': activeUser.nationality,
+            'programme': activeUser.programme,
+            'enrollmentDate': activeUser.enrollmentDate,
+            'email': activeUser.email,
+            'phoneNo': activeUser.phone_no,
+            'address': activeUser.address,
+            'startDate': activeUserHostel.startDate,
+            'endDate': activeUserHostel.endDate,
+            'modifyDate': checkoutDate,
+            'checkoutTime': checkoutTime,
+            'parentName1': parentName,
+            'relationship1': relationship,
+            'parentMobile1': contactNo,
+            'reason': reason, 
+            'status': 'Pending'
+          }
+      )
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+  }
 
   return (
     <>
@@ -316,18 +355,33 @@ function RequestRoomCheckout() {
             <label className="col-2 col-form-label ps-0">Name:</label>
             <div className="col-10 ps-0">
               <input type="text" className="form-control" value={parentName} onChange={e => {setParentName(e.target.value)}}/>
+              {((parentName === '') || (/\d/.test(parentName))) &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid name
+                </div>
+              }
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Relationship:</label>
             <div className="col-10 ps-0">
               <input type="text" className="form-control" value={relationship} onChange={e => {setRelationship(e.target.value)}}/>
+              {((relationship === '') || (/\d/.test(relationship))) &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid relationship
+                </div>
+              }
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Contact No:</label>
             <div className="col-10 ps-0">
               <input type="text" className="form-control" value={contactNo} onChange={e => {setContactNo(e.target.value)}}/>
+              {((contactNo === '') || (RegExp(/^\p{L}/,'u').test(contactNo))) &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid contact number
+                </div>
+              }
             </div>
           </div>
           <div className='row border mt-4 text-center'>
@@ -337,12 +391,25 @@ function RequestRoomCheckout() {
             <label className="col-2 col-form-label ps-0">Date:</label>
             <div className="col-10 ps-0">
               <input type="date" className="form-control" value={checkoutDate} onChange={e => {setCheckoutDate(e.target.value)}}/>
+              {(checkoutDate === '') &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid date
+                </div>
+              }
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Time:</label>
             <div className="col-10 ps-0">
               <input type="text" className="form-control" value={checkoutTime} onChange={e => {setCheckoutTime(e.target.value)}}/>
+              <div className="row col-10 form-text mt-0 pt-0 ps-3">
+                Time format: xx:xx
+              </div>
+              {((checkoutTime === '') || (!checkoutTime.includes(':')) || (RegExp(/^\p{L}/,'u').test(checkoutTime))) &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid time
+                </div>
+              }
             </div>
           </div>
           <div className="row mt-3">
@@ -363,6 +430,11 @@ function RequestRoomCheckout() {
             <label className="col-2 col-form-label px-0">Reason:</label>
             <div className="col-10 ps-0">
               <textarea rows='2' className="form-control" value={reason} onChange={e => {setReason(e.target.value)}}/>
+              {(reason === '') &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide valid text
+                </div>
+              }
             </div>
           </div>
           <div className='row border mt-4 text-center'>
@@ -381,10 +453,29 @@ function RequestRoomCheckout() {
               I hereby confirming that I have read, understood, and agree to the terms and conditions.
             </label>
           </div>
-          {isAgreeTnC 
-          ? <div className="form-group row">
+          {(isAgreeTnC) 
+          ? ((parentName === '') || (relationship === '') || (contactNo === '') || (checkoutDate === '') || (checkoutTime === '') ||
+            (reason === '') || (/\d/.test(parentName)) || (/\d/.test(relationship)) || (RegExp(/^\p{L}/,'u').test(checkoutTime)) || 
+            (RegExp(/^\p{L}/,'u').test(contactNo))|| (RegExp(/^\p{L}/,'u').test(checkoutDate)) || (!checkoutTime.includes(':')))
+            ?
+            <div className="form-group row">
               <div className="col-12 mt-4">
-                <button type="submit" className="btn btn-primary float-end">Submit Form</button>
+                <Link to='/hostelfunction/requestroomcheckout'>
+                  <button type="submit" className="btn btn-primary float-end" onClick={() => {setIsValidForm(false);}}>
+                    Submit Form</button>
+                </Link>
+              </div>
+            </div>
+            :
+            <div className="form-group row">
+              <div className="col-12 mt-4">
+                <button type="submit" className="btn btn-primary float-end" 
+                onClick={() => {
+                    setIsValidForm(true);
+                    addRoomCheckoutRequest();
+                    alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                  }}>
+                  Submit Form</button>
               </div>
             </div>
           : <div className="row">
@@ -392,6 +483,11 @@ function RequestRoomCheckout() {
                 ** It is required to read and accept the terms and conditions before submitting the form.
               </div>
             </div>
+          }
+          {(!isValidForm) &&
+            <label className="form-check-label text-danger">
+              Missing information some blocks are not been filled correct. Request submit unsuccessful.
+            </label>
           }
         </div>
       </form>

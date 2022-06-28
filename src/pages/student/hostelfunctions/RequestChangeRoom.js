@@ -9,6 +9,12 @@ function RequestChangeRoom() {
   const [activeUserHostel, setActiveUserHostel] = useState();
 
   const [isAgreeTnC,setIsAgreeTnC] = useState(false);
+  const [isValidForm, setIsValidForm] = useState(true);
+
+  const [exchangeRoomDate, setExchangeRoomDate] = useState('');
+  const [exchangeRoomTime, setEchangeRoomTime] = useState('');
+  const [unitNumber, setUnitNumber] = useState('');
+  const [reason, setReason] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/student')
@@ -30,7 +36,42 @@ function RequestChangeRoom() {
               }
             });
   }, []);
-  console.log(activeUserHostel)
+
+  function addRoomExchangeRequest(){
+
+    fetch('http://localhost:8080/api/v1/applicationrequest',{
+      method: 'POST',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+          {
+            'category' : 'Exchange Room',
+            'existingStudent' : true,
+            'studentId': activeUser.student_id,
+            'fullname': activeUser.fullname,
+            'nricPassport': activeUser.nric_passport,
+            'gender': activeUser.gender,
+            'dob': activeUser.dob,
+            'nationality': activeUser.nationality,
+            'programme': activeUser.programme,
+            'enrollmentDate': activeUser.enrollmentDate,
+            'email': activeUser.email,
+            'phoneNo': activeUser.phone_no,
+            'address': activeUser.address,
+            'startDate': activeUserHostel.startDate,
+            'endDate': activeUserHostel.endDate,
+            'modifyDate': exchangeRoomDate,
+            'checkoutTime': exchangeRoomTime,
+            'reason': reason,
+            'exchangedHostel': unitNumber,
+            'status': 'Pending'
+          }
+      )
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+  }
 
   return (
     <>
@@ -340,25 +381,48 @@ function RequestChangeRoom() {
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Date:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="date" className="form-control" value={exchangeRoomDate} onChange={e => {setExchangeRoomDate(e.target.value)}}/>
+              {(exchangeRoomDate === '') &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid date
+                </div>
+              }
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Time:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" value={exchangeRoomTime}  onChange={e => {setEchangeRoomTime(e.target.value)}}/>
+              {((exchangeRoomTime === '') || (RegExp(/^\p{L}/,'u').test(exchangeRoomTime)) || (!exchangeRoomTime.includes(':'))) &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid time
+                </div>
+              }
             </div>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Unit Number:</label>
             <div className="col-10 ps-0">
-              <input type="text" className="form-control"/>
+              <input type="text" className="form-control" value={unitNumber} onChange={e => {setUnitNumber(e.target.value)}}/>
+              <div className="row col-10 form-text mt-0 pt-0 ps-3">
+                  Unit number format: eg. D2-D505
+                </div>
+              {((unitNumber === '') || (!unitNumber.includes('-'))) &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide a valid unit number
+                </div>
+              }
             </div>
           </div>
           <div className="row form-group mt-3">
             <label className="col-2 col-form-label px-0">Reason:</label>
             <div className="col-10 ps-0">
-              <textarea rows='2' className="form-control"/>
+              <textarea rows='2' className="form-control" value={reason} onChange={e => {setReason(e.target.value)}}/>
+              {(reason === '') &&
+                <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                  ** Please provide valid text
+                </div>
+              }
             </div>
           </div>
           <div className='row border mt-4 text-center'>
@@ -377,10 +441,27 @@ function RequestChangeRoom() {
               I hereby confirming that I have read, understood, and agree to the terms and conditions.
             </label>
           </div>
-          {isAgreeTnC 
-          ? <div className="form-group row">
+          {(isAgreeTnC) 
+          ? ((exchangeRoomDate === ''))
+            ?
+            <div className="form-group row">
               <div className="col-12 mt-4">
-                <button type="submit" className="btn btn-primary float-end">Submit Form</button>
+                <Link to='/hostelfunction/requestchangeroom'>
+                  <button type="submit" className="btn btn-primary float-end" onClick={() => {setIsValidForm(false);}}>
+                    Submit Form</button>
+                </Link>
+              </div>
+            </div>
+            :
+            <div className="form-group row">
+              <div className="col-12 mt-4">
+                <button type="submit" className="btn btn-primary float-end" 
+                onClick={() => {
+                    setIsValidForm(true);
+                    addRoomExchangeRequest();
+                    alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                  }}>
+                  Submit Form</button>
               </div>
             </div>
           : <div className="row">
@@ -388,6 +469,11 @@ function RequestChangeRoom() {
                 ** It is required to read and accept the terms and conditions before submitting the form.
               </div>
             </div>
+          }
+          {(!isValidForm) &&
+            <label className="form-check-label text-danger">
+              Missing information some blocks are not been filled correct. Request submit unsuccessful.
+            </label>
           }
         </div>
       </form>

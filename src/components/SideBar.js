@@ -38,15 +38,21 @@ function SideBar() {
                         </Link>
                         </li>
                         <li className='nav-item navigation-item mt-1'>
-                            <Link to='/maintainence' className='nav-link text-light text-center pl-4'>
-                            <i className="bi bi-droplet-fill size-icon"></i><br/>
-                            Request Maintainence
-                            </Link>
-                        </li>
-                        <li className='nav-item navigation-item mt-1'>
                             <Link to='/report' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-receipt size-icon"></i><br/>
                             View Report
+                            </Link>
+                        </li>
+                        <li className='nav-item navigation-item mt-1'>
+                            <Link to='/settings' className='nav-link text-light text-center pl-4'>
+                            <i class="bi bi-basket2-fill size-icon"></i><br/>
+                            Edit Pending Request
+                            </Link>
+                        </li>
+                        <li className='nav-item navigation-item mt-1'>
+                            <Link to='/maintainence' className='nav-link text-light text-center pl-4'>
+                            <i className="bi bi-droplet-fill size-icon"></i><br/>
+                            Request Maintainence
                             </Link>
                         </li>
                         <li className='nav-item navigation-item mt-1'>

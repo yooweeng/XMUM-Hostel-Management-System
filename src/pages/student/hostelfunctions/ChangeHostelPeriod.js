@@ -33,7 +33,6 @@ function ChangeHostelPeriod() {
               }
             });
   }, []);
-  console.log(activeUser)
 
   function addChangeHostelPeriodRequest(){
 
