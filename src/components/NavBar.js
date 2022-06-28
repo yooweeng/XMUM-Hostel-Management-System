@@ -44,7 +44,6 @@ function NavBar() {
           .then(res => res.json())
           .then(data => setAnnouncementList(data))
   }, [])
-  console.log(announcementList)
   
   return (
     <div>

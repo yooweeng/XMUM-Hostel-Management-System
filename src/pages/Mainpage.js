@@ -22,9 +22,10 @@ import Home from './Home'
 import ViewHostel from './student/ViewHostel'
 import AddAnnouncement from './admin/AddAnnouncement'
 import AdminList from './admin/AdminList'
-import ViewApplication from './admin/ViewApplication'
+import ViewApplication from './ViewApplication'
 import HostelRequestRecord from './admin/HostelRequestRecord'
 import GenerateReport from './admin/GenerateReport'
+import EditPendingRequest from './student/EditPendingRequest'
 
 export default function Mainpage() {
 
@@ -90,6 +91,9 @@ export default function Mainpage() {
           }
           {(item === 'report') &&
             <ViewReport/>
+          }
+          {(item === 'editpendingrequest') &&
+            <EditPendingRequest/>
           }
           {(item === 'feedback') &&
             <ProvideFeedback/>

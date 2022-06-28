@@ -55,16 +55,19 @@ function RequestChangeRoom() {
             'dob': activeUser.dob,
             'nationality': activeUser.nationality,
             'programme': activeUser.programme,
+            'maritialStatus': activeUser.maritialStatus,
             'enrollmentDate': activeUser.enrollmentDate,
             'email': activeUser.email,
             'phoneNo': activeUser.phone_no,
             'address': activeUser.address,
             'startDate': activeUserHostel.startDate,
+            'startTime': activeUserHostel.startTime,
             'endDate': activeUserHostel.endDate,
             'modifyDate': exchangeRoomDate,
             'checkoutTime': exchangeRoomTime,
             'reason': reason,
             'exchangedHostel': unitNumber,
+            'roomId': activeUserHostel.room_id,
             'status': 'Pending'
           }
       )

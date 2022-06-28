@@ -1,93 +1,81 @@
-import React, { createRef, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-function PendingHostelRequest() {
+function EditPendingRequest() {
+  const [studentPendingRequestList, setStudentPendingRequestList] = useState();
 
-  const [applicationRequestList, setApplicationRequestList] = useState();
-
-  useEffect(() => {
-    fetch('http://localhost:8080/api/v1/applicationrequest?status=pending')
-            .then(res => res.json())
-            .then(data => {setApplicationRequestList(data)})
-  }, [])
-
-  function approveApplicationRequest(id){
-    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
-      method: 'PUT',
-      headers: {
-          'Content-type': 'application/json'
-      },
-      body: JSON.stringify(
-        {
-            'status': 'Approved'
-        }
-      )
-    })
-    .then(res => res.json())
-    .then(data => data)
-  }
-
-  function rejectApplicationRequest(id){
-    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
-      method: 'PUT',
-      headers: {
-          'Content-type': 'application/json'
-      },
-      body: JSON.stringify(
-        {
-            'status': 'Rejected'
-        }
-      )
-    })
-    .then(res => res.json())
-    .then(data => data)
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
   }
   
+  useEffect(() => {
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    fetch(`http://localhost:8080/api/v1/applicationrequest?studentId=${user}`)
+            .then(res => res.json())
+            .then(data => {setStudentPendingRequestList(data)});
+  }, []);
+
   return (
     <>
-        <div className='container mt-2 ms-3'>
-          <h1>Pending Hostel Request</h1>
-          <table className="table table-striped mt-5">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Request type</th>
-                <th scope="col">Block</th>
-                <th scope="col">Student id</th>
-                <th scope="col">Remarks</th>
-                <th scope="col">Status</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {applicationRequestList && applicationRequestList.map((item, index) => {
-                let block;
-                if(item.selectedBlockD){
-                  block = 'Block D';
-                }
-                else if(item.selectedBlockD == false){
-                  block = 'Block LY';
-                }
-                return(
-                  <tr key={item.applicationId}>
-                    <th scope ='row'>{index +1}</th>
-                    <td>{item.category}</td>
-                    <td>{block}</td>
-                    <td>{item.studentId}</td>
-                    <td>{item.remarks}</td>
-                    <td>{item.status}</td>
-                    <td>
-                      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#modalTarget${item.applicationId}`}>
-                        Check
-                      </button>
-                      <div className="modal fade" id={`modalTarget${item.applicationId}`}>
-                        <div className="modal-dialog">
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <h5 className="modal-title">Application</h5>
-                              <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            {(item.category === 'Application') &&
+      <div className='row ms-4 mt-5 p-0'>
+          <h2 className='mt-1 p-0'>Edit Pending Request</h2>
+        </div>
+        <div className='row'>
+        {studentPendingRequestList && studentPendingRequestList.map((item, index) => {
+          
+          let block;
+          if(item.selectedBlockD){
+            block = 'Block D';
+          }
+          else{
+            block = 'Block LY';
+          }
+
+          if(item.status === 'Pending'){
+            return(
+            <div className='col-4 mt-3' key={item.applicationId}>
+              <div className='card shadow mt-3'>
+                <div className='card-body p-4'>
+                  <h5 className='card-title'>{item.category}</h5>
+                  <div className='row mt-4'>
+                    <div className='col-6 card-text'>
+                      Student id: {item.studentId}
+                    </div>
+                    <div className='col-6 card-text'>
+                      Block: {block}
+                    </div>
+                  </div>
+                  <div className='row mt-4'>
+                    <div className='col-6 card-text'>
+                      Remarks: {item.remarks}
+                    </div>
+                    {(item.status == "Approved") &&
+                      <div className='col-6 card-text'>
+                        Status: <span className='text-success'>{item.status}</span>
+                      </div>
+                    }
+                    {(item.status == "Rejected") &&
+                      <div className='col-6 card-text'>
+                        Status: <span className='text-danger'>{item.status}</span>
+                      </div>
+                    }
+                    {(item.status == "Pending") &&
+                      <div className='col-6 card-text'>
+                        Status: <span className='text-warning'>{item.status}</span>
+                      </div>
+                    }
+                    <button className="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target={`#modalTarget${item.applicationId}`}>View Details</button>
+                    <div className="modal fade" id={`modalTarget${item.applicationId}`}>
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title">Application</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          {(item.category === 'Application') &&
                               <div className="modal-body">
                                 <h5>Request Summary</h5>
                                 Category: {item.category} <br/>
@@ -185,38 +173,26 @@ function PendingHostelRequest() {
                                 Remark(s): {item.remarks}
                               </div>
                             }
-                            <div className="modal-footer">
-                              <Link to="/viewapplication" state={item}>
+                          <div className="modal-footer">
+                            <Link to="/hostelfunction/hostelapplication" state={item}>
                                 <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
-                              </Link>
-                              <a href='/home'>
-                                <button type="button" className="btn btn-success" data-bs-dismiss="modal"
-                                onClick={() => {
-                                  approveApplicationRequest(item.applicationId);
-                                }}>
-                                  Approve</button>
-                              </a>
-                              <a href='/home'>
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" 
-                                onClick={() => {
-                                  rejectApplicationRequest(item.applicationId);
-                                }}>
-                                  Reject</button>
-                              </a>
-                              <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
-                            </div>
+                            </Link>
+                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
                           </div>
                         </div>
                       </div>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )
+          }
+          })
+          }
+          </div>
     </>
   )
 }
 
-export default PendingHostelRequest
+export default EditPendingRequest

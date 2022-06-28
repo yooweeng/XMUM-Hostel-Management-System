@@ -44,8 +44,8 @@ function SideBar() {
                             </Link>
                         </li>
                         <li className='nav-item navigation-item mt-1'>
-                            <Link to='/settings' className='nav-link text-light text-center pl-4'>
-                            <i class="bi bi-basket2-fill size-icon"></i><br/>
+                            <Link to='/editpendingrequest' className='nav-link text-light text-center pl-4'>
+                            <i className="bi bi-basket2-fill size-icon"></i><br/>
                             Edit Pending Request
                             </Link>
                         </li>

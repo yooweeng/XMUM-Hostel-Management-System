@@ -1,28 +1,103 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { LoginContext } from '../../../helper/Context'
 
 function HostelApplication() {
 
   const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  const location = useLocation();
+  const data = location.state;
+  console.log(data)
+
   const [activeUser, setActiveUser] = useState();
 
   const [isAgreeTnC,setIsAgreeTnC] = useState(false);
   const [isValidForm, setIsValidForm] = useState(true);
 
-  const [nickname, setNickname] = useState('');
-  const [parentName1, setParentName1] = useState('');
-  const [parentName2, setParentName2] = useState('');
-  const [relationship1, setRelationship1] = useState('');
-  const [relationship2, setRelationship2] = useState('');
-  const [parentMobile1, setParentMobile1] = useState('');
-  const [parentMobile2, setParentMobile2] = useState('');
-  const [isSelectedBlockD, setIsSelectedBlockD] = useState(false);
-  const [isSelectedBlockLY, setIsSelectedBlockLY] = useState(false);
-  const [roommateName, setRoommateName] = useState('');
-  const [roommateNricPassport, setRoommateNricPassport] = useState('');
-  const [roommatePhoneNo, setRoommatePhoneNo] = useState('');
-  const [remarks, setRemarks] = useState('');
+  const [nickname, setNickname] = useState(() => {
+    if(data != null){
+      return data.nickname;
+    }
+    return '';
+  });
+  const [parentName1, setParentName1] = useState(() => {
+    if(data != null){
+      return data.parentName1;
+    }
+    return '';
+  });
+  const [parentName2, setParentName2] = useState(() => {
+    if(data != null){
+      return data.parentName2;
+    }
+    return '';
+  });
+  const [relationship1, setRelationship1] = useState(() => {
+    if(data != null){
+      return data.relationship1;
+    }
+    return '';
+  });
+  const [relationship2, setRelationship2] = useState(() => {
+    if(data != null){
+      return data.relationship2;
+    }
+    return '';
+  });
+  const [parentMobile1, setParentMobile1] = useState(() => {
+    if(data != null){
+      return data.parentMobile1;
+    }
+    return '';
+  });
+  const [parentMobile2, setParentMobile2] = useState(() => {
+    if(data != null){
+      return data.parentMobile2;
+    }
+    return '';
+  });
+  const [isSelectedBlockD, setIsSelectedBlockD] = useState(() => {
+    if(data != null){
+      if(data.selectedBlockD){
+        return true;
+      }
+    }
+    return false;
+  });
+  const [isSelectedBlockLY, setIsSelectedBlockLY] = useState(() => {
+    if(data != null){
+      if(!data.selectedBlockD){
+        return true;
+      }
+    }
+    return false;
+  });
+  const [roommateName, setRoommateName] = useState(() => {
+    if(data != null){
+      return data.roommateName;
+    }
+    return '';
+  });
+  const [roommateNricPassport, setRoommateNricPassport] = useState(() => {
+    if(data != null){
+      return data.roommateNricPassport;
+    }
+    return '';
+  });
+  const [roommatePhoneNo, setRoommatePhoneNo] = useState(() => {
+    if(data != null){
+      return data.roommatePhoneNo;
+    }
+    return '';
+  });
+  const [remarks, setRemarks] = useState(() => {
+    if(data != null){
+      return data.remarks;
+    }
+    return '';
+  });
+  console.log(isSelectedBlockD)
+  console.log(isSelectedBlockLY)
 
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/student')
@@ -409,9 +484,9 @@ function HostelApplication() {
                     <td className='text-center'>
                       {isSelectedBlockLY
                       ?
-                      <input className="form-check-input" type="checkbox" value={isSelectedBlockD} onChange={() => {setIsSelectedBlockD(!isSelectedBlockD)}} disabled/>
+                      <input className="form-check-input" type="checkbox" defaultChecked={isSelectedBlockD} onChange={() => {setIsSelectedBlockD(!isSelectedBlockD)}} disabled/>
                       :
-                      <input className="form-check-input" type="checkbox" value={isSelectedBlockD} onChange={() => {setIsSelectedBlockD(!isSelectedBlockD)}}/>
+                      <input className="form-check-input" type="checkbox" defaultChecked={isSelectedBlockD} onChange={() => {setIsSelectedBlockD(!isSelectedBlockD)}}/>
                       }
                       
                     </td>
@@ -423,9 +498,9 @@ function HostelApplication() {
                     <td className='text-center'>
                       {isSelectedBlockD
                       ?
-                      <input className="form-check-input" type="checkbox" value={isSelectedBlockLY} onChange={() => {setIsSelectedBlockLY(!isSelectedBlockLY)}} disabled/>
+                      <input className="form-check-input" type="checkbox" defaultChecked={isSelectedBlockLY} onChange={() => {setIsSelectedBlockLY(!isSelectedBlockLY)}} disabled/>
                       :
-                      <input className="form-check-input" type="checkbox" value={isSelectedBlockLY} onChange={() => {setIsSelectedBlockLY(!isSelectedBlockLY)}}/>
+                      <input className="form-check-input" type="checkbox" defaultChecked={isSelectedBlockLY} onChange={() => {setIsSelectedBlockLY(!isSelectedBlockLY)}}/>
                       }
                       
                     </td>
