@@ -52,7 +52,7 @@ function SideBar() {
                         <li className='nav-item navigation-item mt-1'>
                             <Link to='/maintainence' className='nav-link text-light text-center pl-4'>
                             <i className="bi bi-droplet-fill size-icon"></i><br/>
-                            Request Maintainence
+                            Request Maintenance
                             </Link>
                         </li>
                         <li className='nav-item navigation-item mt-1'>

@@ -11,7 +11,6 @@ export default function Register() {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [confirmPassword,setConfirmPassword] = useState('')
-    const [category,setCategory] = useState('student')
 
     function register(){
 
@@ -96,10 +95,7 @@ export default function Register() {
                 <div className="row mt-3">
                     <label className="col-2 col-form-label align-self-center ms-5 p-0">Category:</label>
                     <div className="col-4">
-                        <select className="form-select" value={category} onChange={e => setCategory(e.target.value)}>
-                            <option value="1">Student</option>
-                            <option value="2">Staff</option>
-                        </select>
+                        <input type="text" className="form-control" placeholder='Student' disabled/>
                     </div>
                 </div>
                 <div className='row mt-5 offset-3'>

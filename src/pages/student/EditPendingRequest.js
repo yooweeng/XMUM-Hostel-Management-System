@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 function EditPendingRequest() {
   const [studentPendingRequestList, setStudentPendingRequestList] = useState();
+  const [isSelectFilter, setIsSelectFilter] = useState('Pending');
 
   let token = JSON.parse(sessionStorage.getItem("token"));
   let tokenType;
@@ -20,10 +21,41 @@ function EditPendingRequest() {
 
   return (
     <>
-      <div className='row ms-4 mt-5 p-0'>
+        <div className='row ms-4 mt-5 p-0'>
           <h2 className='mt-1 p-0'>Edit Pending Request</h2>
         </div>
         <div className='row'>
+            <div className='ms-4' style={{fontSize: "1.1rem"}}>Filter: </div>
+        </div>
+        <div className='row mt-1'>
+            <div className='col-6 ms-4'>
+                {(isSelectFilter === 'All')
+                ?
+                <button className='btn btn-secondary col-1' onClick={() => {setIsSelectFilter('All')}}>All</button>
+                :
+                <button className='btn btn-primary col-1' onClick={() => {setIsSelectFilter('All')}}>All</button>
+                }
+                {(isSelectFilter === 'Approved')
+                ?
+                <button className='btn btn-secondary col-2 ms-3' onClick={() => {setIsSelectFilter('Approved')}}>Approved</button>
+                :
+                <button className='btn btn-primary col-2 ms-3' onClick={() => {setIsSelectFilter('Approved')}}>Approved</button>
+                }
+                {(isSelectFilter === 'Rejected')
+                ?
+                <button className='btn btn-secondary col-2 ms-3' onClick={() => {setIsSelectFilter('Rejected')}}>Rejected</button>
+                :
+                <button className='btn btn-primary col-2 ms-3' onClick={() => {setIsSelectFilter('Rejected')}}>Rejected</button>
+                }
+                {(isSelectFilter === 'Pending')
+                ?
+                <button className='btn btn-secondary col-2 ms-3' onClick={() => {setIsSelectFilter('Pending')}}>Pending</button>
+                :
+                <button className='btn btn-primary col-2 ms-3' onClick={() => {setIsSelectFilter('Pending')}}>Pending</button>
+                }
+            </div>
+        </div>
+        <div className='row ms-2'>
         {studentPendingRequestList && studentPendingRequestList.map((item, index) => {
           
           let block;
@@ -34,7 +66,7 @@ function EditPendingRequest() {
             block = 'Block LY';
           }
 
-          if(item.status === 'Pending'){
+          if((item.status === isSelectFilter) || (isSelectFilter === 'All')){
             return(
             <div className='col-4 mt-3' key={item.applicationId}>
               <div className='card shadow mt-3'>

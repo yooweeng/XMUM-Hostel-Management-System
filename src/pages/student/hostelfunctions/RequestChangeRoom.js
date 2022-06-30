@@ -82,10 +82,10 @@ function RequestChangeRoom() {
         <ol className="breadcrumb font-breadcrumb">
           <li className="breadcrumb-item"><Link to="/home">Home</Link></li>
           <li className="breadcrumb-item"><Link to="/hostelfunction">Hostel Functions</Link></li>
-          <li className="breadcrumb-item active">Request Room Exchange</li>
+          <li className="breadcrumb-item active">Request Room Change</li>
         </ol>
       </nav>
-      <h1>Room Exchange Form</h1>
+      <h1>Room Change Form</h1>
       <form>
         <div className='container'>
           <div className='row border mt-4 text-center'>
@@ -379,7 +379,7 @@ function RequestChangeRoom() {
             </div>
           </div>
           <div className='row border mt-4 text-center'>
-            <h5 className='m-0 py-1'>Exchanged Room Details</h5>
+            <h5 className='m-0 py-1'>Changed Room Details</h5>
           </div>
           <div className="row mt-3">
             <label className="col-2 col-form-label ps-0">Date:</label>

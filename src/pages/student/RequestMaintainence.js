@@ -49,10 +49,10 @@ function RequestMaintainence() {
       <nav>
         <ol className="breadcrumb font-breadcrumb">
           <li className="breadcrumb-item"><Link to="/home">Home</Link></li>
-          <li className="breadcrumb-item active">Request Maintainence</li>
+          <li className="breadcrumb-item active">Request Maintenance</li>
         </ol>
       </nav>
-      <h1>Request Maintainence</h1>
+      <h1>Request Maintenance</h1>
       <form>
         <div className='row form-group mt-4'>
           <div className="row col-4">

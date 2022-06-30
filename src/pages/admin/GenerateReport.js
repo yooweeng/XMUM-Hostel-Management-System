@@ -23,7 +23,7 @@ function GenerateReport() {
               </ol>
           </nav>
           <div className='container ms-3'>
-        <h1 className='mb-4'>Report Generation</h1>
+            <h1 className='mb-4'>Report Generation</h1>
             <div className='row'>
                 <div className='float-end' style={{fontSize: "1.1rem"}}>Filter: </div>
             </div>

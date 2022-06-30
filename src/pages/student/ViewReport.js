@@ -79,7 +79,7 @@ function ViewReport() {
         </div>
       </div>
       <div className="mt-5">
-        <h5>Maintainence Records</h5>
+        <h5>Maintenance Records</h5>
         <div className='card'>
           <table className="table">
             <thead>

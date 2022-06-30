@@ -1293,7 +1293,7 @@ function ViewApplication() {
             </div>
             <ReactToPdf targetRef={ref} filename="download.pdf" scale={0.67}>
                 {({ toPdf }) => <button type="button" className="btn btn-danger mt-4 float-end" data-bs-dismiss="modal" 
-                onClick={toPdf}>Generate Physical Copy<i className="bi bi-filetype-pdf ms-2" style={{fontSize: "20px"}}></i></button>}
+                onClick={toPdf}>Generate Form<i className="bi bi-filetype-pdf ms-2" style={{fontSize: "20px"}}></i></button>}
             </ReactToPdf>
           </div>
       }

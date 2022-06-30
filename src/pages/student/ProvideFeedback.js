@@ -25,7 +25,7 @@ function ProvideFeedback() {
           </div>
         </div>
         <div className='row mt-4'>
-          <label className="form-label col-2 mb-0">Additional attachments (if any):</label>
+          <label className="form-label col-2 mb-0">Additional attachments (if applicable):</label>
           <div className="col-10 mb-0 pb-0">
             <input className="form-control" type="file" multiple/>
           </div>
