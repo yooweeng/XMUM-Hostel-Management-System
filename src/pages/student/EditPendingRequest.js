@@ -19,6 +19,19 @@ function EditPendingRequest() {
             .then(data => {setStudentPendingRequestList(data)});
   }, []);
 
+  
+
+  function deleteApplicationRequest(id){
+    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => data)
+  }
+
   return (
     <>
         <div className='row ms-4 mt-5 p-0'>
@@ -99,7 +112,14 @@ function EditPendingRequest() {
                         Status: <span className='text-warning'>{item.status}</span>
                       </div>
                     }
-                    <button className="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target={`#modalTarget${item.applicationId}`}>View Details</button>
+                    <div className='row mt-4'>
+                      <button className="btn btn-primary col-5 offset-1" data-bs-toggle="modal" data-bs-target={`#modalTarget${item.applicationId}`}>View Details</button>
+                    {(item.status == "Pending") &&  
+                      <a href='/editpendingrequest' className='col-5'>
+                        <button className="btn btn-danger float-end ms-3" onClick={() => {deleteApplicationRequest(item.applicationId);}}>Revoke</button>
+                      </a>
+                    }
+                    </div>
                     <div className="modal fade" id={`modalTarget${item.applicationId}`}>
                       <div className="modal-dialog">
                         <div className="modal-content">
