@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { LoginContext } from '../../../helper/Context';
 
 function RequestRoomCheckout() {
@@ -8,16 +8,49 @@ function RequestRoomCheckout() {
   const [activeUser, setActiveUser] = useState();
   const [activeUserHostel, setActiveUserHostel] = useState();
 
+  const location = useLocation();
+  const data = location.state;
+  console.log(data)
+
   const [isAgreeTnC,setIsAgreeTnC] = useState(false);
   const [isValidForm, setIsValidForm] = useState(true);
 
-  const [parentName, setParentName] = useState('');
-  const [relationship, setRelationship] = useState('');
-  const [contactNo, setContactNo] = useState('');
-  const [checkoutDate, setCheckoutDate] = useState('');
-  const [checkoutTime, setCheckoutTime] = useState('');
-  const [reason, setReason] = useState('');
-
+  const [parentName, setParentName] = useState(() => {
+    if(data != null){
+      return data.parentName1;
+    }
+    return '';
+  });
+  const [relationship, setRelationship] = useState(() => {
+    if(data != null){
+      return data.relationship1;
+    }
+    return '';
+  });
+  const [contactNo, setContactNo] = useState(() => {
+    if(data != null){
+      return data.parentMobile1;
+    }
+    return '';
+  });
+  const [checkoutDate, setCheckoutDate] = useState(() => {
+    if(data != null){
+      return data.modifyDate;
+    }
+    return '';
+  });
+  const [checkoutTime, setCheckoutTime] = useState(() => {
+    if(data != null){
+      return data.checkoutTime;
+    }
+    return '';
+  });
+  const [reason, setReason] = useState(() => {
+    if(data != null){
+      return data.reason;
+    }
+    return '';
+  });
 
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/student')
@@ -75,7 +108,28 @@ function RequestRoomCheckout() {
       )
     })
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => data)
+  }
+
+  function updateRoomCheckoutRequest(id){
+    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          'modifyDate': checkoutDate,
+          'checkoutTime': checkoutTime,
+          'parentName1': parentName,
+          'relationship1': relationship,
+          'parentMobile1': contactNo,
+          'reason': reason
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
   }
 
   return (
@@ -471,9 +525,17 @@ function RequestRoomCheckout() {
               <div className="col-12 mt-4">
                 <button type="submit" className="btn btn-primary float-end" 
                 onClick={() => {
-                    setIsValidForm(true);
-                    addRoomCheckoutRequest();
-                    alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    if(data == null){
+                      setIsValidForm(true);
+                      addRoomCheckoutRequest();
+                      alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    }
+                    else{
+                      setIsValidForm(true);
+                      updateRoomCheckoutRequest(data.applicationId);
+                      alert('Response updated and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    }
+                    
                   }}>
                   Submit Form</button>
               </div>

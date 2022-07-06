@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginContext } from '../../helper/Context';
 
 function ViewReport() {
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+
+  const [maintenanceRequestList, setMaintenanceRequestList] = useState();
+  
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/v1/maintenancerequest?studentId=${loginDetails.user}`)
+            .then(res => res.json())
+            .then(data => {setMaintenanceRequestList(data)});
+  }, [])
+
   return (
     <>
       <nav>
@@ -81,38 +93,29 @@ function ViewReport() {
       <div className="mt-5">
         <h5>Maintenance Records</h5>
         <div className='card'>
-          <table className="table">
+          <table className="table table-striped">
             <thead>
-              <tr className='table-primary'>
-                <th>Date</th>
-                <th>Subject</th>
-                <th>Service Type</th>
-                <th>Status</th>
-                <th>Technician Comments</th>
-              </tr>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+                <th scope="col">Service Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Technician Comments</th>
+            </tr>
             </thead>
             <tbody>
-              <tr>
-                  <td>11-09-2019</td>
-                  <td>Water dripping from air conditioner</td>
-                  <td>Air Conditioner</td>
-                  <td>Solved</td>
-                  <td>DONE- Repair drain pipe leaking</td>
-              </tr>
-              <tr>
-                  <td>24-05-2020</td>
-                  <td>Basin stuck and overflow</td>
-                  <td>Fitting and Plumbing</td>
-                  <td>Solved</td>
-                  <td>Work done on 28 May 2020</td>
-              </tr>
-              <tr>
-                  <td>07-07-2020</td>
-                  <td>Sink blockage and faucet leakage</td>
-                  <td>Fitting and Plumbing</td>
-                  <td>Solved</td>
-                  <td>Job complete on 9 August 2020</td>
-              </tr>
+            {maintenanceRequestList && maintenanceRequestList.map((item, index) => {
+
+                return (
+                <tr key={item.mrId}>
+                <td>{item.date}</td>
+                <td>{item.description}</td>
+                <td>{item.category}</td>
+                <td>{item.status}</td>
+                <td>{item.technicianComments}</td>
+                </tr>
+                )
+            })}
             </tbody>
           </table>
         </div>

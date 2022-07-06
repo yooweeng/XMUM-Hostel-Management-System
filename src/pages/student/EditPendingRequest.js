@@ -108,6 +108,7 @@ function EditPendingRequest() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                           </div>
                           {(item.category === 'Application') &&
+                            <>
                               <div className="modal-body">
                                 <h5>Request Summary</h5>
                                 Category: {item.category} <br/>
@@ -137,8 +138,16 @@ function EditPendingRequest() {
                                 Roomate Mobile Number: {item.roommatePhoneNo} <br/>
                                 Remark(s): {item.remarks}
                               </div>
+                              <div className="modal-footer">
+                                <Link to="/hostelfunction/hostelapplication" state={item}>
+                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
+                                </Link>
+                                <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
+                              </div>
+                              </>
                             }
                             {(item.category === 'Checkout') &&
+                              <>
                               <div className="modal-body">
                                 <h5>Request Summary</h5>
                                 Category: {item.category} <br/>
@@ -162,8 +171,16 @@ function EditPendingRequest() {
                                 <h5 className='mt-3'>Others</h5>
                                 Remark(s): {item.remarks}
                               </div>
+                              <div className="modal-footer">
+                                <Link to="/hostelfunction/requestroomcheckout" state={item}>
+                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
+                                </Link>
+                                <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
+                              </div>
+                              </>
                             }
                             {(item.category === 'Exchange Room') &&
+                              <>
                               <div className="modal-body">
                                 <h5>Request Summary</h5>
                                 Category: {item.category} <br/>
@@ -183,8 +200,16 @@ function EditPendingRequest() {
                                 <h5 className='mt-3'>Others</h5>
                                 Remark(s): {item.remarks}
                               </div>
+                              <div className="modal-footer">
+                                <Link to="/hostelfunction/requestchangeroom" state={item}>
+                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
+                                </Link>
+                                <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
+                              </div>
+                              </>
                             }
                             {(item.category === 'Change Period') &&
+                              <>
                               <div className="modal-body">
                                 <h5>Request Summary</h5>
                                 Category: {item.category} <br/>
@@ -204,13 +229,14 @@ function EditPendingRequest() {
                                 <h5 className='mt-3'>Others</h5>
                                 Remark(s): {item.remarks}
                               </div>
+                              <div className="modal-footer">
+                                <Link to="/hostelfunction/changehostelperiod" state={item}>
+                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
+                                </Link>
+                                <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
+                              </div>
+                            </>
                             }
-                          <div className="modal-footer">
-                            <Link to="/hostelfunction/hostelapplication" state={item}>
-                                <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
-                            </Link>
-                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
-                          </div>
                         </div>
                       </div>
                     </div>

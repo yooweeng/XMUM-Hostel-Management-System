@@ -19,7 +19,8 @@ function GenerateReport() {
           <nav className='ms-4'>
               <ol className="breadcrumb font-breadcrumb">
               <li className="breadcrumb-item"><Link to="/home">Home</Link></li>
-              <li className="breadcrumb-item active">Report Generation</li>
+              <li className="breadcrumb-item"><Link to="/reporttype">Selecte Report</Link></li>
+              <li className="breadcrumb-item active">Application Request Report Generation</li>
               </ol>
           </nav>
           <div className='container ms-3'>
@@ -56,7 +57,7 @@ function GenerateReport() {
                 </div>
             </div>
             <div className='px-5 py-1' ref={ref}>
-                <h2 className='mt-5'>Record</h2>
+                <h2 className='mt-5'>Application Request Record</h2>
                 <span className='mt-0 float-end'>Filter applied: {isSelectFilter}</span>
                 <table className="table table-striped mt-5">
                 <thead>

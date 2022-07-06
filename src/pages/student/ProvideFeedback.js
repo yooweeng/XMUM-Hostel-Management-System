@@ -61,7 +61,11 @@ function ProvideFeedback() {
         </div>
         <div className="form-group row">
           <div className="col-12 mt-4">
-              <button type="submit" className="btn btn-primary float-end" onClick={() => saveFeedback()}>Submit</button>
+              <button type="submit" className="btn btn-primary float-end"
+               onClick={() => {
+                saveFeedback();
+                alert('Feedback recieved and stored. Thank you for your constructive feedback.');
+                }}>Submit</button>
             </div>
           </div>
       </form>

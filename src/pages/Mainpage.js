@@ -24,8 +24,11 @@ import AddAnnouncement from './admin/AddAnnouncement'
 import AdminList from './admin/AdminList'
 import ViewApplication from './ViewApplication'
 import HostelRequestRecord from './admin/HostelRequestRecord'
-import GenerateReport from './admin/GenerateReport'
+import ApplicationRequestGenerateReport from './admin/generatereport/ApplicationRequestGenerateReport'
 import EditPendingRequest from './student/EditPendingRequest'
+import SelectReportType from './admin/generatereport/SelectReportType'
+import MaintenanceRequestGenerateReport from './admin/generatereport/MaintenanceRequestGenerateReport'
+import FeedbackGenerateReport from './admin/generatereport/FeedbackGenerateReport'
 
 export default function Mainpage() {
 
@@ -125,8 +128,17 @@ export default function Mainpage() {
           {(item === 'requestlog') &&
             <HostelRequestRecord/>
           }
-          {(item === 'generatereport') &&
-            <GenerateReport/>
+          {((item === 'reporttype') && (subitem == null)) &&
+            <SelectReportType/>
+          }
+          {((item === 'reporttype') && (subitem === 'applicationrequestreport')) &&
+            <ApplicationRequestGenerateReport/>
+          }
+          {((item === 'reporttype') && (subitem === 'maintenancereport')) &&
+            <MaintenanceRequestGenerateReport/>
+          }
+          {((item === 'reporttype') && (subitem === 'feedbackreport')) &&
+            <FeedbackGenerateReport/>
           }
           </section>
       </div>

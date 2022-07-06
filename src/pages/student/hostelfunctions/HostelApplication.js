@@ -96,8 +96,6 @@ function HostelApplication() {
     }
     return '';
   });
-  console.log(isSelectedBlockD)
-  console.log(isSelectedBlockLY)
 
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/student')
@@ -150,7 +148,7 @@ function HostelApplication() {
       )
     })
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => data)
   }
 
   return (
@@ -452,7 +450,7 @@ function HostelApplication() {
               <label className="col-4 col-form-label">Mobile No.:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={parentMobile2} onChange={e => {setParentMobile2(e.target.value)}}/>
-                {(RegExp(/^\p{L}/,'u').test(parentMobile2)) && 
+                {(RegExp(/^\p{L}/,'u').test(parentMobile2) && (parentMobile2 != null)) && 
                   <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
                     ** Please provide a valid mobile number
                   </div>
@@ -523,7 +521,7 @@ function HostelApplication() {
             <label className="col-3 col-form-label ps-0">Name of Roomate (if applicable):</label>
             <div className="col-9">
               <input type="text" className="form-control" value={roommateName} onChange={e => {setRoommateName(e.target.value)}}/>
-              {((/\d/.test(roommateName)) || (roommateName === '')) && 
+              {((/\d/.test(roommateName)) && (roommateName != null)) && 
                 <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
                   ** Please provide a valid name
                 </div>
@@ -535,7 +533,7 @@ function HostelApplication() {
               <label className="col-4 col-form-label">Roomate Mobile No.:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={roommatePhoneNo} onChange={e => {setRoommatePhoneNo(e.target.value)}}/>
-                {((RegExp(/^\p{L}/,'u').test(roommatePhoneNo)) || (roommatePhoneNo === '')) && 
+                {((RegExp(/^\p{L}/,'u').test(roommatePhoneNo)) && (roommatePhoneNo != null)) && 
                   <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
                     ** Please provide a valid mobile number
                   </div>
@@ -546,7 +544,7 @@ function HostelApplication() {
               <label className="col-4 col-form-label">NRIC/Passport No.:</label>
               <div className="col-8">
                 <input type="text" className="form-control" value={roommateNricPassport} onChange={e => {setRoommateNricPassport(e.target.value)}}/>
-                {((RegExp(/^\p{L}/,'u').test(roommateNricPassport)) || (roommateNricPassport === '')) && 
+                {((RegExp(/^\p{L}/,'u').test(roommateNricPassport)) && (roommateNricPassport != null)) && 
                   <div className="row form-text text-danger mt-0 pt-0 ps-3">
                     ** Please provide a valid nric/passport number
                   </div>
@@ -604,8 +602,7 @@ function HostelApplication() {
           ? ((/\d/.test(nickname)) || (/\d/.test(parentName1)) || (/\d/.test(relationship1)) || (/\d/.test(parentName2)) || (/\d/.test(relationship2)) || 
             (/\d/.test(roommateName)) || (RegExp(/^\p{L}/,'u').test(parentMobile1)) || (RegExp(/^\p{L}/,'u').test(parentMobile2)) || 
             (RegExp(/^\p{L}/,'u').test(roommatePhoneNo)) || (RegExp(/^\p{L}/,'u').test(roommateNricPassport)) || (!isSelectedBlockD && !isSelectedBlockLY)) ||
-            (nickname === '') || (parentName1 === '') || (relationship1 === '') || (roommateName === '') ||
-            (roommatePhoneNo === '') || (roommateNricPassport === '') || (parentMobile1 === '')
+            (parentName1 === '') || (relationship1 === '') || (parentMobile1 === '')
             ?
             <div className="form-group row">
               <div className="col-12 mt-4">

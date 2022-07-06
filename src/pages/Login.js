@@ -53,7 +53,7 @@ export default function Login() {
 
         for(let i=0; i<data.length; i++){
             //if student id and password match for record in database
-            if(userId === data[i].user_id && password === data[i].pw){
+            if(userId === data[i].userId && password === data[i].pw){
                 fetchToken(userId);
                 setIsValidForm(true);
                 console.log('success')
