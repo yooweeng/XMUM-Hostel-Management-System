@@ -5,6 +5,11 @@ function HostelRequestRecord() {
 
   const [applicationRequestList, setApplicationRequestList] = useState();
   const [roomRecords, setRoomRecords] = useState();
+  const [dHostelRates, setDHostelRates] = useState('');
+  const [lyHostelRates, setLyHostelRates] = useState('');
+  const [modifyDHostelRates, setModifyDHostelRates] = useState('');
+  const [modifyLyHostelRates, setModifyLyHostelRates] = useState('');
+
   const [isCardMode, setIsCardMode] = useState(true);
 
   useEffect(() => {
@@ -14,7 +19,45 @@ function HostelRequestRecord() {
       fetch('http://localhost:8080/api/v1/hostel')
               .then(res => res.json())
               .then(data => {setRoomRecords(data)});
+      fetch('http://localhost:8080/api/v1/hostelrate')
+              .then(res => res.json())
+              .then(data => {
+                setDHostelRates(data[0].dRate);
+                setLyHostelRates(data[0].lyRate);
+              });
   }, [])
+
+  function updateBlockDHostelRate(){
+    fetch(`http://localhost:8080/api/v1/hostelrate/1`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+            'dRate': modifyDHostelRates
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
+  }
+
+  function updateBlockLyHostelRate(){
+    fetch(`http://localhost:8080/api/v1/hostelrate/1`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+            'lyRate': modifyLyHostelRates
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
+  }
 
   function deleteHostelRecord(id){
     fetch(`http://localhost:8080/api/v1/hostel/${id}`,{
@@ -298,6 +341,73 @@ function HostelRequestRecord() {
             }
             </tbody>
             </table>
+          </div>
+        </div>
+        <div className='container ms-5 mt-5'>
+          <h1>Change Hostel Rates</h1>
+          <div className='card shadow p-4 mt-4'>
+            <div className="row mt-2">
+              <h4 className='col-2 offset-3 ps-5'>Block D</h4>
+              <h4 className='col-2 offset-4 ps-5'>Block LY</h4>
+            </div>
+            <div className="row mt-2">
+                <label className="col-2 col-form-label">Current Hostel Rates: (RM per month)</label>
+                <div className="col-4">
+                  <input type="text" className="form-control" placeholder={dHostelRates} disabled/>
+                </div>
+                <label className="col-2 col-form-label">Current Hostel Rates: (RM per month)</label>
+                <div className="col-4">
+                    <input type="text" className="form-control" placeholder={lyHostelRates} disabled/>
+                </div>
+            </div>
+            <div className="row mt-4">
+                <label className="col-2 col-form-label">Modify Hostel Rates:</label>
+                <div className="col-4">
+                    <input type="text" className="form-control" value={modifyDHostelRates} onChange={e => {setModifyDHostelRates(e.target.value);}}/>
+                    {((RegExp(/^\p{L}/,'u').test(modifyDHostelRates)) || (modifyDHostelRates === '')) && 
+                        <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                          ** Please provide a valid rate
+                        </div>
+                    }
+                </div>
+                <label className="col-2 col-form-label">Modify Hostel Rates:</label>
+                <div className="col-4">
+                    <input type="text" className="form-control" value={modifyLyHostelRates} onChange={e => {setModifyLyHostelRates(e.target.value);}}/>
+                    {((RegExp(/^\p{L}/,'u').test(modifyLyHostelRates)) || (modifyLyHostelRates === '')) && 
+                        <div className="row col-10 form-text text-danger mt-0 pt-0 ps-3">
+                          ** Please provide a valid rate
+                        </div>
+                    }
+                </div>
+            </div>
+            <div className='row'>
+            {((RegExp(/^\p{L}/,'u').test(modifyDHostelRates)) || (modifyDHostelRates === ''))
+              ?
+              <Link to="/requestlog" className='btn btn-info col-1 offset-5 mt-4'
+               onClick={() => {
+                alert("Please provide a valid rate.");
+               }}>Change</Link>
+               :
+               <a href="/requestlog" className='btn btn-info col-1 offset-5 mt-4'
+               onClick={() => {
+                updateBlockDHostelRate();
+                alert("Hostel rates of Block D has been changed and updated.");
+               }}>Change</a>
+              }
+               {((RegExp(/^\p{L}/,'u').test(modifyLyHostelRates)) || (modifyLyHostelRates === '')) 
+                ? 
+                <Link to="/requestlog" className='btn btn-info col-1 offset-5 mt-4'
+               onClick={() => {
+                alert("Please provide a valid rate.");
+               }}>Change</Link>
+                :
+                <a href="/requestlog" className='btn btn-info col-1 offset-5 mt-4'
+               onClick={() => {
+                updateBlockLyHostelRate();
+                alert("Hostel rates of Block LY has been changed and updated.");
+               }}>Change</a>
+              }
+            </div>
           </div>
         </div>
     </>
