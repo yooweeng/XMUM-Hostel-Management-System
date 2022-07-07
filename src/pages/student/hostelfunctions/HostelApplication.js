@@ -151,6 +151,33 @@ function HostelApplication() {
     .then(data => data)
   }
 
+  function updateApplicationRequest(id){
+    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          'nickname': nickname,
+          'roommateName': roommateName,
+          'roommateNricPassport': roommateNricPassport,
+          'roommatePhoneNo': roommatePhoneNo,
+          'parentName1': parentName1,
+          'relationship1': relationship1,
+          'parentName2': parentName2,
+          'relationship2': relationship2,
+          'parentMobile1': parentMobile1,
+          'parentMobile2': parentMobile2,
+          'remarks': remarks,
+          'selectedBlockD': isSelectedBlockD
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
+  }
+
   return (
     <>
       <nav>
@@ -618,8 +645,16 @@ function HostelApplication() {
                 <button type="submit" className="btn btn-primary float-end" 
                 onClick={() => {
                     setIsValidForm(true);
-                    addApplicationRequest();
-                    alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    //from edit pending request page
+                    if(data != null){
+                      updateApplicationRequest(data.applicationId);
+                      alert('Response updated and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    }
+                    else{
+                      addApplicationRequest();
+                      alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    }
+                    
                   }}>
                   Submit Form</button>
               </div>
