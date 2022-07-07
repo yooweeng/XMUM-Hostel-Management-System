@@ -23,7 +23,6 @@ export default function Register() {
                 {
                     'student_id': userId,
                     'email': email,
-                    'password': password,
                     'fname': fname,
                     'lname': lname
                 }
@@ -33,7 +32,26 @@ export default function Register() {
                 console.log('successful')
                 return res.json()
             })
-            .then(data => console.log(data))
+            .then(data => console.log(data));
+
+        fetch('http://localhost:8080/api/v1/userdetail',{
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        'userId': userId,
+                        'category': 'student',
+                        'pw': password
+                    }
+                )
+            })
+                .then(res => {
+                    console.log('successful')
+                    return res.json()
+                })
+                .then(data => console.log(data));
     }
 
     return (
@@ -99,7 +117,7 @@ export default function Register() {
                     </div>
                 </div>
                 <div className='row mt-5 offset-3'>
-                <button className='btn btn-primary col-2 p-0'>Register</button>
+                <button className='btn btn-primary col-2 p-0' onClick={() => {register();}}>Register</button>
                 <Link className='col-2 p-0 ms-3' to='/'>
                     <button className='btn btn-primary col-12'>Back</button>
                 </Link>
