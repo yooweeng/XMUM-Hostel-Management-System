@@ -17,6 +17,38 @@ function ViewApplication() {
   }
   console.log(tokenType)
 
+  function approveApplicationRequest(id){
+    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+            'status': 'Approved'
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
+  }
+
+  function rejectApplicationRequest(id){
+    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+            'status': 'Rejected'
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
+  }
+
   return (
     <>
       {(tokenType === 'adm') &&
@@ -1291,10 +1323,26 @@ function ViewApplication() {
               </>
             }
             </div>
-            <ReactToPdf targetRef={ref} filename="download.pdf" scale={0.67}>
-                {({ toPdf }) => <button type="button" className="btn btn-danger mt-4 float-end" data-bs-dismiss="modal" 
-                onClick={toPdf}>Generate Form<i className="bi bi-filetype-pdf ms-2" style={{fontSize: "20px"}}></i></button>}
-            </ReactToPdf>
+            <div className='mt-4'>
+              <ReactToPdf targetRef={ref} filename="download.pdf" scale={0.67}>
+                  {({ toPdf }) => <button type="button" className="btn btn-danger float-end" data-bs-dismiss="modal" 
+                  onClick={toPdf}>Generate Form<i className="bi bi-filetype-pdf ms-2" style={{fontSize: "20px"}}></i></button>}
+              </ReactToPdf>
+              <a href='/home'>
+                <button type="button" className="btn btn-warning mt-1 me-3 float-end" data-bs-dismiss="modal" 
+                onClick={() => {
+                  rejectApplicationRequest(data.applicationId);
+                }}>
+                  Reject</button>
+              </a>
+              <a href='/home'>
+                <button type="button" className="btn btn-success mt-1 me-3 float-end" data-bs-dismiss="modal"
+                onClick={() => {
+                  approveApplicationRequest(data.applicationId);
+                }}>
+                  Approve</button>
+              </a>
+            </div>
           </div>
       }
     </>
