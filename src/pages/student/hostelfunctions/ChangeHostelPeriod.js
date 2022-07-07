@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { LoginContext } from '../../../helper/Context';
 
 function ChangeHostelPeriod() {
@@ -11,7 +11,16 @@ function ChangeHostelPeriod() {
   const [isAgreeTnC,setIsAgreeTnC] = useState(false);
   const [isValidForm, setIsValidForm] = useState(true);
 
-  const [modifyDate, setModifyDate] = useState('');
+  const location = useLocation();
+  const data = location.state;
+  console.log(data)
+
+  const [modifyDate, setModifyDate] = useState(() => {
+    if(data != null){
+      return data.modifyDate;
+    }
+    return ''
+  });
 
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/student')
@@ -65,6 +74,22 @@ function ChangeHostelPeriod() {
     })
     .then(res => res.json())
     .then(data => console.log(data))
+  }
+
+  function updateChangeHostelPeriodRequest(id){
+    fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          'modifyDate': modifyDate
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
   }
 
   return (
@@ -402,8 +427,14 @@ function ChangeHostelPeriod() {
                 <button type="submit" className="btn btn-primary float-end" 
                 onClick={() => {
                     setIsValidForm(true);
-                    addChangeHostelPeriodRequest();
-                    alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    if(data != null){
+                      updateChangeHostelPeriodRequest(data.applicationId);
+                      alert('Response updated and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    }
+                    else{
+                      addChangeHostelPeriodRequest();
+                      alert('Response received and stored.\n\nKindly wait for several operation day for the approval or rejection of the submitted request.');
+                    }
                   }}>
                   Submit Form</button>
               </div>
