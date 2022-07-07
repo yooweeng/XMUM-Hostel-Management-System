@@ -4,13 +4,30 @@ import { Link } from 'react-router-dom';
 function HostelRequestRecord() {
 
   const [applicationRequestList, setApplicationRequestList] = useState();
+  const [roomRecords, setRoomRecords] = useState();
   const [isCardMode, setIsCardMode] = useState(true);
 
   useEffect(() => {
       fetch('http://localhost:8080/api/v1/applicationrequest')
               .then(res => res.json())
-              .then(data => {setApplicationRequestList(data)})
+              .then(data => {setApplicationRequestList(data)});
+      fetch('http://localhost:8080/api/v1/hostel')
+              .then(res => res.json())
+              .then(data => {setRoomRecords(data)});
   }, [])
+
+  function deleteHostelRecord(id){
+    fetch(`http://localhost:8080/api/v1/hostel/${id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => data);
+  }
+
+  console.log(roomRecords)
 
   return (
     <>
@@ -23,10 +40,10 @@ function HostelRequestRecord() {
         <div className='row'>
           <div className='col-3 offset-9'>
             <button className='btn btn-primary float-end col-3' onClick={() => {setIsCardMode(false)}}>
-              <i class="bi bi-hdd-stack-fill" style={{fontSize: "20px"}}></i>
+              <i className="bi bi-hdd-stack-fill" style={{fontSize: "20px"}}></i>
             </button>
             <button className='btn btn-primary float-end col-3 me-1' onClick={() => {setIsCardMode(true)}}>
-              <i class="bi bi-collection" style={{fontSize: "20px"}}></i>
+              <i className="bi bi-collection" style={{fontSize: "20px"}}></i>
             </button>
           </div>
           
@@ -75,8 +92,8 @@ function HostelRequestRecord() {
                           Status: <span className='text-warning'>{item.status}</span>
                         </div>
                       }
-                      <button className="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target={`#modalTarget${item.applicationId}`}>View Details</button>
-                      <div className="modal fade" id={`modalTarget${item.applicationId}`}>
+                      <button className="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target={`#modalTargetViewDetails${item.applicationId}`}>View Details</button>
+                      <div className="modal fade" id={`modalTargetViewDetails${item.applicationId}`}>
                         <div className="modal-dialog">
                           <div className="modal-content">
                             <div className="modal-header">
@@ -160,10 +177,10 @@ function HostelRequestRecord() {
                         <td>{item.remarks}</td>
                         <td>{item.status}</td>
                         <td>
-                          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#modalTarget${item.applicationId}`}>
+                          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#modalTargetViewDetails${item.applicationId}`}>
                             View Details
                           </button>
-                          <div className="modal fade" id={`modalTarget${item.applicationId}`}>
+                          <div className="modal fade" id={`modalTargetViewDetails${item.applicationId}`}>
                             <div className="modal-dialog">
                               <div className="modal-content">
                                 <div className="modal-header">
@@ -216,7 +233,72 @@ function HostelRequestRecord() {
               </table>
             </>
           }
-          
+          <div className='container ms-3 mt-5'>
+            <h1>Room Record</h1>
+            <table className="table table-striped mt-5">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Student Id</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">Registration Time</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Room Id</th>
+                <th scope="col">Room Type</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+            {roomRecords && roomRecords.map((item, index) => {
+
+            return(
+              <tr key={index}>
+                <th scope ='row'>{index +1}</th>
+                <td>{item.user_id}</td>
+                <td>{item.startDate}</td>
+                <td>{item.startTime}</td>
+                <td>{item.endDate}</td>
+                <td>{item.room_id}</td>
+                <td>{item.room_type}</td>
+                <td>{item.status}</td>
+                <td>
+                <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target={`#modalTargetDeleteStudent${index}`}>
+                  Remove
+                </button>
+                <div className="modal fade" id={`modalTargetDeleteStudent${index}`}>
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">Removed Student from Hostel</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div className="modal-body">
+                        Do you sure to remove this student from the hostel. <br/><br/>
+                        The data will be removed from the database and this action is not reversible.
+                      </div>
+                      <div className="modal-footer">
+                        <a href='/requestlog'>
+                          <button type="button" className="btn btn-success" data-bs-dismiss="modal" 
+                          onClick={() => {
+                            deleteHostelRecord(item.seq_id);
+                            alert("The selected student has been successfully removed from the hostel.");
+                            }}>
+                              Confirm</button>
+                        </a>
+                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal">No</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </td>
+              </tr>
+            )
+            })
+            }
+            </tbody>
+            </table>
+          </div>
         </div>
     </>
   )

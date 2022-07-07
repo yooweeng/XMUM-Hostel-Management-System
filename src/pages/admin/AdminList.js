@@ -265,7 +265,6 @@ function AdminList() {
                           </div>
                         </div>
                       </>
-                      
                     }
                   </td>
                 </tr>
