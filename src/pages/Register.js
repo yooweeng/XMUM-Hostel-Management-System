@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import LoginHeaderBar from '../components/LoginHeaderBar'
 
 export default function Register() {
 
-    const [userId,setUserId] = useState('')
-    const [fname,setFname] = useState('')
-    const [lname,setLname] = useState('')
-    const [email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
-    const [confirmPassword,setConfirmPassword] = useState('')
+    const [userId,setUserId] = useState('');
+    const [fname,setFname] = useState('');
+    const [lname,setLname] = useState('');
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const [confirmPassword,setConfirmPassword] = useState('');
 
     function register(){
 
@@ -21,37 +21,23 @@ export default function Register() {
             },
             body: JSON.stringify(
                 {
-                    'student_id': userId,
+                    'userId': userId,
                     'email': email,
                     'fname': fname,
-                    'lname': lname
+                    'lname': lname,
+                    'pw': password
                 }
             )
         })
-            .then(res => {
-                console.log('successful')
-                return res.json()
-            })
-            .then(data => console.log(data));
-
-        fetch('http://localhost:8080/api/v1/userdetail',{
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        'userId': userId,
-                        'category': 'student',
-                        'pw': password
-                    }
-                )
-            })
-                .then(res => {
-                    console.log('successful')
-                    return res.json()
-                })
-                .then(data => console.log(data));
+            .then(res => res.json())
+            .then(data => {
+                if(data.message){
+                    alert(data.message);
+                }
+                else{
+                    alert('Successfully created the account, you can now log into the system using the newly registered account.')
+                }
+            });
     }
 
     return (
@@ -63,18 +49,33 @@ export default function Register() {
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">User ID:</label>
                     <div className="col-4">
                         <input type="text" className="form-control" value={userId} onChange={e => setUserId(e.target.value)}/>
+                        {(userId === '') &&
+                        <div className="form-text text-danger ms-3 ps-1">
+                            ** cannot leave blank for user id
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className='row mt-4'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">First Name:</label>
                     <div className="col-4">
                         <input type="text" className="form-control" value={fname} onChange={e => setFname(e.target.value)}/>
+                        {(fname === '') &&
+                        <div className="form-text text-danger ms-3 ps-1">
+                            ** cannot leave blank for fname
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className='row mt-4'>
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">Last Name:</label>
                     <div className="col-4">
                         <input type="text" className="form-control" value={lname} onChange={e => setLname(e.target.value)}/>
+                        {(lname === '') &&
+                        <div className="form-text text-danger ms-3 ps-1">
+                            ** cannot leave blank for lname
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className='row mt-4'>
@@ -82,6 +83,11 @@ export default function Register() {
                     <div className="col-4">
                         <input type="text" className="form-control" value={email} onChange={e => setEmail(e.target.value)}/>
                     </div>
+                {(email === '') &&
+                <div className="form-text text-danger offset-3">
+                ** cannot leave blank for email
+                </div>
+                }
                 {(email.length > 0) && (!email.includes('@')) &&
                  <div className="form-text text-danger offset-3">
                     ** Not a proper email format '@' missing
@@ -97,6 +103,11 @@ export default function Register() {
                     <label className="col-2 col-form-label align-self-center p-0 ms-5">Password:</label>
                     <div className="col-4">
                         <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)}/>
+                        {(password === '') &&
+                        <div className="form-text text-danger ms-3 ps-1">
+                            ** cannot leave blank for password
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className='row mt-3'>
@@ -105,6 +116,11 @@ export default function Register() {
                         <input type="password" className="form-control" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
                     </div>
                 </div>
+                {(confirmPassword === '') &&
+                 <div className="form-text text-danger offset-3 ps-2">
+                    ** cannot leave blank for password
+                 </div>
+                }
                 {(confirmPassword.length > 0) && (password !== confirmPassword) &&
                  <div className="form-text text-danger offset-3">
                     ** Password did not match
@@ -117,7 +133,14 @@ export default function Register() {
                     </div>
                 </div>
                 <div className='row mt-5 offset-3'>
-                <button className='btn btn-primary col-2 p-0' onClick={() => {register();}}>Register</button>
+                {((userId === '') || (fname === '') || (lname === '') || (email === '') ||
+                 (password === '') || (confirmPassword === '') || (!email.includes('@')) ||
+                 (!email.includes('.')) || (password !== confirmPassword))
+                 ?
+                 <button className='btn btn-primary col-2 p-0' disabled>Register</button>
+                 :
+                 <button className='btn btn-primary col-2 p-0' onClick={() => {register();}}>Register</button>
+                }
                 <Link className='col-2 p-0 ms-3' to='/'>
                     <button className='btn btn-primary col-12'>Back</button>
                 </Link>
@@ -126,3 +149,5 @@ export default function Register() {
         </>
     )
 }
+
+
