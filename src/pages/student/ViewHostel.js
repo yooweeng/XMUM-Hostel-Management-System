@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import topDownMap from '../../images/topDownMap.png'
 import D1 from '../../images/D1.jpeg'
@@ -14,10 +14,25 @@ import LY8 from '../../images/LY8.jpeg'
 import LY9 from '../../images/LY9.jpeg'
 import underConstruction from '../../images/underConstruction.JPG'
 import '../css/ViewHostel.css'
+import { LoginContext } from '../../helper/Context'
 
 function ViewHostel(props) {
 
   const [selectedBlock, setSelectedBlock] = useState('');
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
 
   return (
     <>

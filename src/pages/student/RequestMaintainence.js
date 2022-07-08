@@ -13,6 +13,19 @@ function RequestMaintainence() {
   const [description, setDescription] = useState('');
   const [remarks, setRemarks] = useState('');
 
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
+
   useEffect(() => {
     loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
     let tokenType = loginDetails.token.slice(0,3);

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import ReactToPdf from "react-to-pdf";
+import { LoginContext } from '../helper/Context';
 
 function ViewApplication() {
 
@@ -16,6 +17,18 @@ function ViewApplication() {
     tokenType = token.slice(0,3);
   }
   console.log(tokenType)
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'adm'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
 
   function approveApplicationRequest(id){
     fetch(`http://localhost:8080/api/v1/applicationrequest/${id}`,{

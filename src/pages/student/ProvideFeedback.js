@@ -1,11 +1,26 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginContext } from '../../helper/Context';
 
 function ProvideFeedback() {
 
   const [subject, setSubject] = useState('');
   const [comment, setComment] = useState('');
   const [remarks, setRemarks] = useState('');
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
 
   function saveFeedback(){
     fetch('http://localhost:8080/api/v1/feedback',{

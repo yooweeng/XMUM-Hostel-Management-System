@@ -9,6 +9,19 @@ function ViewReport() {
   const [maintenanceRequestList, setMaintenanceRequestList] = useState();
   const [rentalFeeList, setRentalFeeList] = useState();
 
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
+
   let balanceRemaining = 0;
   
   useEffect(() => {

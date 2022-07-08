@@ -15,6 +15,19 @@ function ChangeHostelPeriod() {
   const data = location.state;
   console.log(data)
 
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
+
   const [modifyDate, setModifyDate] = useState(() => {
     if(data != null){
       return data.modifyDate;

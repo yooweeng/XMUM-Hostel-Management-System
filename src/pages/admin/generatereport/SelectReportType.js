@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginContext } from '../../../helper/Context';
 import '../../css/SelectReportType.css'
 
 function SelectReportType() {
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+
+  if(token != null){
+      tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'adm'){
+      setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+  });
+  }
+
   return (
     <>
         <nav className='ms-4'>

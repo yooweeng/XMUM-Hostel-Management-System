@@ -17,6 +17,12 @@ function HostelFunctions() {
     tokenType = loginDetails.token.slice(0,3);
   }
 
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
+
   useEffect(() => {
     if(tokenType == "stu"){
       fetch('http://localhost:8080/api/v1/student')

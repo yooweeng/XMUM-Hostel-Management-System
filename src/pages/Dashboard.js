@@ -7,6 +7,19 @@ function Dashboard() {
   const {loginDetails, setLoginDetails} = useContext(LoginContext);
   const [activeUser, setActiveUser] = useState();
 
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
+
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/student')
             .then(res => res.json())

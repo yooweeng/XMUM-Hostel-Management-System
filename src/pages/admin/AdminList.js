@@ -13,6 +13,19 @@ function AdminList() {
   const [password, setPassword] = useState('');
 
   loginDetails.user = JSON.parse(sessionStorage.getItem("user"));
+  
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'adm'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
 
   useEffect(() => {
     fetch('http://localhost:8080/api/v1/admin')

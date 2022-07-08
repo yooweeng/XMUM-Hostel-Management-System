@@ -14,6 +14,19 @@ function HostelApplication() {
   const [isAgreeTnC,setIsAgreeTnC] = useState(false);
   const [isValidForm, setIsValidForm] = useState(true);
 
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
+
   const [nickname, setNickname] = useState(() => {
     if(data != null){
       return data.nickname;

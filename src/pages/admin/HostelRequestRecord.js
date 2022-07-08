@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { LoginContext } from '../../helper/Context';
 
 function HostelRequestRecord() {
 
@@ -11,6 +12,20 @@ function HostelRequestRecord() {
   const [modifyLyHostelRates, setModifyLyHostelRates] = useState('');
 
   const [isCardMode, setIsCardMode] = useState(true);
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+  let token = JSON.parse(sessionStorage.getItem("token"));
+  let tokenType;
+  
+  if(token != null){
+    tokenType = token.slice(0,3);
+  }
+
+  if(tokenType != 'adm'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
+  }
 
   useEffect(() => {
       fetch('http://localhost:8080/api/v1/applicationrequest')

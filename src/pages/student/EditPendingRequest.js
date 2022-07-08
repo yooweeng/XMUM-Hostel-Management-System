@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { LoginContext } from '../../helper/Context';
 
 function EditPendingRequest() {
   const [studentPendingRequestList, setStudentPendingRequestList] = useState();
@@ -10,6 +11,14 @@ function EditPendingRequest() {
   
   if(token != null){
     tokenType = token.slice(0,3);
+  }
+
+  const {loginDetails, setLoginDetails} = useContext(LoginContext);
+
+  if(tokenType != 'stu'){
+    setLoginDetails(prevDetails => {
+      return {...prevDetails, isAuthorized: false}
+    });
   }
   
   useEffect(() => {
