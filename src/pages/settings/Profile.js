@@ -7,6 +7,9 @@ function Profile() {
   const {loginDetails, setLoginDetails} = useContext(LoginContext);
   const [activeUser, setActiveUser] = useState();
 
+  const [fname, setFname] = useState('');
+  const [lname, setLname] = useState('');
+
   loginDetails.token = JSON.parse(sessionStorage.getItem("token"));
   let tokenType = loginDetails.token.slice(0,3);
 
@@ -35,6 +38,40 @@ function Profile() {
             })
     }
   }, [])
+
+  function updateAdmin(){
+    fetch(`http://localhost:8080/api/v1/admin/${activeUser.seq_id}`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+            'fname': fname,
+            'lname': lname
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data)
+  }
+
+  function updateStudent(){
+    fetch(`http://localhost:8080/api/v1/student/${activeUser.seq_id}`,{
+      method: 'PUT',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+            'fname': fname,
+            'lname': lname
+        }
+      )
+    })
+    .then(res => res.json())
+    .then(data => data);
+  }
 
   return (
     <>
@@ -86,19 +123,23 @@ function Profile() {
                 <div className="row col-4">
                   <label className="col-4 col-form-label">First Name:</label>
                   <div className="col-8">
-                    <input type="text" className="form-control"/>
+                    <input type="text" className="form-control" value={fname} onChange={e => {setFname(e.target.value);}}/>
                   </div>
                 </div>
                 <div className="row col-4 offset-md-1">
                   <label className="col-5 col-form-label">Last Name:</label>
                   <div className="col-7">
-                    <input type="text" className="form-control"/>
+                    <input type="text" className="form-control" value={lname} onChange={e => {setLname(e.target.value);}}/>
                   </div>
                 </div>
               </div>
               <div className="form-group row">
                   <div className="col-12 mt-5">
-                    <button type="submit" className="btn btn-primary">Update Profile</button>
+                    <button type="submit" className="btn btn-primary"
+                     onClick={ () => {
+                      updateAdmin();
+                      alert('The user details are updated with the information provided.')
+                     }}>Update Profile</button>
                   </div>
               </div>
             </div>
@@ -176,26 +217,29 @@ function Profile() {
                 <div className="row col-4">
                   <label className="col-4 col-form-label">First Name:</label>
                   <div className="col-8">
-                    <input type="text" className="form-control"/>
+                    <input type="text" className="form-control" value={fname} onChange={e => {setFname(e.target.value);}}/>
                   </div>
                 </div>
                 <div className="row col-4 offset-md-1">
                   <label className="col-5 col-form-label">Last Name:</label>
                   <div className="col-7">
-                    <input type="text" className="form-control"/>
+                    <input type="text" className="form-control" value={lname} onChange={e => {setLname(e.target.value);}}/>
                   </div>
                 </div>
               </div>
               <div className="form-group row">
                   <div className="col-12 mt-5">
-                    <button type="submit" className="btn btn-primary">Update Profile</button>
+                    <button type="submit" className="btn btn-primary"
+                     onClick={() => {
+                      updateStudent();
+                      alert('The user details are updated with the information provided.')
+                     }}>Update Profile</button>
                   </div>
               </div>
             </div>
           </form>
         </>
       }
-      
     </>
   )
 }

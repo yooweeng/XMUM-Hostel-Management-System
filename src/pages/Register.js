@@ -35,7 +35,8 @@ export default function Register() {
                     alert(data.message);
                 }
                 else{
-                    alert('Successfully created the account, you can now log into the system using the newly registered account.')
+                    alert('Successfully created the account, you can now log into the system using the newly registered account.');
+                    window.location.reload(false);
                 }
             });
     }
