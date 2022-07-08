@@ -7,12 +7,19 @@ function ViewReport() {
   const {loginDetails, setLoginDetails} = useContext(LoginContext);
 
   const [maintenanceRequestList, setMaintenanceRequestList] = useState();
+  const [rentalFeeList, setRentalFeeList] = useState();
+
+  let balanceRemaining = 0;
   
   useEffect(() => {
     fetch(`http://localhost:8080/api/v1/maintenancerequest?studentId=${loginDetails.user}`)
             .then(res => res.json())
             .then(data => {setMaintenanceRequestList(data)});
+    fetch(`http://localhost:8080/api/v1/rentalfee?userId=${loginDetails.user}`)
+            .then(res => res.json())
+            .then(data => {setRentalFeeList(data)});       
   }, [])
+  console.log(rentalFeeList)
 
   return (
     <>
@@ -31,61 +38,35 @@ function ViewReport() {
               <tr className='table-primary'>
                 <th>Date</th>
                 <th>Record</th>
-                <th>Amount</th>
-                <th>Paid</th>
-                <th>Balance remaining</th>
+                <th>Amount (RM)</th>
+                <th>Paid (RM)</th>
+                <th>Balance remaining (RM)</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                  <td>14-04-2018</td>
-                  <td>Deposit</td>
-                  <td><span className='float-end'>500.00</span></td>
-                  <td><span className='float-end'>(500.00)</span></td>
-                  <td>-</td>
-              </tr>
-              <tr>
-                  <td>01-08-2018</td>
-                  <td>Rental- Semester 2</td>
-                  <td><span className='float-end'>1360.00</span></td>
-                  <td><span className='float-end'>(1360.00)</span></td>
-                  <td>-</td>
-              </tr>
-              <tr>
-                  <td>03-12-2018</td>
-                  <td>Rental- Semester 3</td>
-                  <td><span className='float-end'>1360.00</span></td>
-                  <td><span className='float-end'>(1360.00)</span></td>
-                  <td>-</td>
-              </tr>
-              <tr>
-                  <td>03-12-2018</td>
-                  <td>Rental- Semester 3</td>
-                  <td><span className='float-end'>1360.00</span></td>
-                  <td><span className='float-end'>(1360.00)</span></td>
-                  <td>-</td>
-              </tr>
-              <tr>
-                  <td>11-04-2019</td>
-                  <td>Rental- Semester 1</td>
-                  <td><span className='float-end'>1700.00</span></td>
-                  <td><span className='float-end'>(1700.00)</span></td>
-                  <td>-</td>
-              </tr>
-              <tr>
-                  <td>16-09-2019</td>
-                  <td>Rental- Semester 2</td>
-                  <td><span className='float-end'>1700.00</span></td>
-                  <td><span className='float-end'>(1700.00)</span></td>
-                  <td>-</td>
-              </tr>
-              <tr>
-                  <td>10-02-2020</td>
-                  <td>Rental- Semester 3</td>
-                  <td><span className='float-end'>680.00</span></td>
-                  <td><span className='float-end'>(680.00)</span></td>
-                  <td>-</td>
-              </tr>
+              {rentalFeeList && rentalFeeList.map((item, index) => {
+
+                balanceRemaining += item.balanceRemaining;
+                console.log(balanceRemaining)
+
+                return(
+                  <tr key={item.seq_id}>
+                    <td>{item.date}</td>
+                    <td>{item.record}</td>
+                    <td><span className='float-end'>{parseFloat(item.amount).toFixed(2)}</span></td>
+                    <td><span className='float-end'>({parseFloat(item.paid).toFixed(2)})</span></td>
+                    <td>
+                      {(balanceRemaining === 0)
+                      ?
+                      '-'
+                      :
+                      parseFloat(balanceRemaining).toFixed(2)
+                      }
+                    </td>
+                </tr>
+                )
+              })
+              }
             </tbody>
           </table>
         </div>
@@ -125,3 +106,5 @@ function ViewReport() {
 }
 
 export default ViewReport
+
+
