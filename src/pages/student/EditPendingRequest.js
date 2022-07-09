@@ -41,6 +41,8 @@ function EditPendingRequest() {
     .then(data => data)
   }
 
+  console.log(studentPendingRequestList);
+
   return (
     <>
         <div className='row ms-4 mt-5 p-0'>
@@ -168,9 +170,11 @@ function EditPendingRequest() {
                                 Remark(s): {item.remarks}
                               </div>
                               <div className="modal-footer">
+                                {(item.status === 'Pending') &&
                                 <Link to="/hostelfunction/hostelapplication" state={item}>
-                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
+                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Edit In Form</button>
                                 </Link>
+                                }
                                 <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
                               </div>
                               </>
@@ -201,9 +205,11 @@ function EditPendingRequest() {
                                 Remark(s): {item.remarks}
                               </div>
                               <div className="modal-footer">
+                                {(item.status === 'Pending') &&
                                 <Link to="/hostelfunction/requestroomcheckout" state={item}>
-                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
+                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Edit In Form</button>
                                 </Link>
+                                }
                                 <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
                               </div>
                               </>
@@ -230,9 +236,11 @@ function EditPendingRequest() {
                                 Remark(s): {item.remarks}
                               </div>
                               <div className="modal-footer">
+                                {(item.status === 'Pending') &&
                                 <Link to="/hostelfunction/requestchangeroom" state={item}>
-                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
+                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Edit In Form</button>
                                 </Link>
+                                }
                                 <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
                               </div>
                               </>
@@ -259,9 +267,11 @@ function EditPendingRequest() {
                                 Remark(s): {item.remarks}
                               </div>
                               <div className="modal-footer">
-                                <Link to="/hostelfunction/changehostelperiod" state={item}>
-                                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">View In Form</button>
-                                </Link>
+                                {(item.status === 'Pending') &&
+                                  <Link to="/hostelfunction/changehostelperiod" state={item}>
+                                      <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Edit In Form</button>
+                                  </Link>
+                                }
                                 <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Back</button>
                               </div>
                             </>

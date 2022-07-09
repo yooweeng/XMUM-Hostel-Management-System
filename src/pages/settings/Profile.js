@@ -135,11 +135,16 @@ function Profile() {
               </div>
               <div className="form-group row">
                   <div className="col-12 mt-5">
+                    {((fname === '') || (lname === ''))
+                    ?
+                    <button type="submit" className="btn btn-primary" disabled>Update Profile</button>
+                    :
                     <button type="submit" className="btn btn-primary"
                      onClick={ () => {
                       updateAdmin();
                       alert('The user details are updated with the information provided.')
                      }}>Update Profile</button>
+                    }
                   </div>
               </div>
             </div>
@@ -229,11 +234,17 @@ function Profile() {
               </div>
               <div className="form-group row">
                   <div className="col-12 mt-5">
+                    {((fname === '') || (lname === ''))
+                    ?
+                    <button type="submit" className="btn btn-primary" disabled>Update Profile</button>
+                    :
                     <button type="submit" className="btn btn-primary"
                      onClick={() => {
                       updateStudent();
                       alert('The user details are updated with the information provided.')
                      }}>Update Profile</button>
+                    }
+                    
                   </div>
               </div>
             </div>

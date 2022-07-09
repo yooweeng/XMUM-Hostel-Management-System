@@ -6,6 +6,7 @@ function Dashboard() {
 
   const {loginDetails, setLoginDetails} = useContext(LoginContext);
   const [activeUser, setActiveUser] = useState();
+  const [activeUserHostel, setActiveUserHostel] = useState();
 
   let token = JSON.parse(sessionStorage.getItem("token"));
   let tokenType;
@@ -29,7 +30,16 @@ function Dashboard() {
                   setActiveUser(data[i])
                 }
               }
-            })
+            });
+     fetch('http://localhost:8080/api/v1/hostel')
+            .then(res => res.json())
+            .then(data => {
+              for(let i=0; i<data.length; i++){
+                if(loginDetails.user == data[i].user_id){
+                  setActiveUserHostel(data[i])
+                }
+              }
+            });
   }, [])
 
   return (
@@ -120,11 +130,25 @@ function Dashboard() {
           <tbody>
             <tr className='table-primary'>
               <td>Room Status: </td>
-              <td>In Stay</td>
+              <td>
+                {activeUserHostel
+                ?
+                activeUserHostel.status
+                :
+                'na'
+                }
+                </td>
             </tr>
             <tr>
               <td>Room Number (if any): </td>
-              <td>D2-D505</td>
+              <td>
+                {activeUserHostel
+                ?
+                activeUserHostel.room_id
+                :
+                'na'
+                }
+              </td>
             </tr>
           </tbody>
         </table>
